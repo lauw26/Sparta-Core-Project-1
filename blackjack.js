@@ -10,9 +10,13 @@ var $deal = $("#deal");
 //Stand button declared
 
 //Deck variable which stores card objects
+var deck = [];
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
+	//Create deck at start of game
+	createDeck();
+	console.log(deck);
 
 }
 //----------------------------------------------------------------------------------------------
@@ -36,15 +40,27 @@ function start(){
 
 //----------------------------------------------------------------------------------------------
 //Card object blueprint
-function card(Suit,num,play){
-	this.suit = Suit;
+function card(num,Suit,play){
 	this.number = num;
+	this.suit = Suit;
 	this.played = play;
 }
 //----------------------------------------------------------------------------------------------
 //Create player function
 
 //----------------------------------------------------------------------------------------------
-//Create cards and store function 
-
+//Create cards and store in deck function 
+function createDeck(){
+	for(var i = 0 ; i < 52; i++){
+		if (i < 13){ 
+		deck[i] = new card(i+1,"Diamonds",false);
+	}else if (i < 26 && i > 12){ 
+		deck[i] = new card(i-12,"Clubs",false);
+	}else if (i < 39 && i > 25){ 
+		deck[i] = new card(i-25,"Hearts",false);
+	}else 
+		deck[i] = new card(i-38,"Spades",false);
+	}
+}
 //----------------------------------------------------------------------------------------------
+start();
