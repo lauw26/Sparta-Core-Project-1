@@ -1,6 +1,8 @@
 //Start of code to read entire page
 //----------------------------------------------------------------------------------------------
 //Variables
+//Deal button implemented
+var $deal = $("#deal");
 //Bet button declared
 
 //Hit button declared
@@ -10,7 +12,9 @@
 //Deck variable which stores card objects
 //----------------------------------------------------------------------------------------------
 //Start function
+function start(){
 
+}
 //----------------------------------------------------------------------------------------------
 //Button implementation function 
 	//Implement action listener for bet
@@ -32,7 +36,11 @@
 
 //----------------------------------------------------------------------------------------------
 //Card object blueprint
-
+function card(Suit,num,play){
+	this.suit = Suit;
+	this.number = num;
+	this.played = play;
+}
 //----------------------------------------------------------------------------------------------
 //Create player function
 
