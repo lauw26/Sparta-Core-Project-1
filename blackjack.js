@@ -1,11 +1,11 @@
 //Start of code to read entire page
 //----------------------------------------------------------------------------------------------
 //Variables
-//Bet button decleared
+//Bet button declared
 
-//Hit button decleared
+//Hit button declared
 
-//Stand button decleared
+//Stand button declared
 
 //Deck variable which stores card objects
 //----------------------------------------------------------------------------------------------
@@ -38,3 +38,5 @@
 
 //----------------------------------------------------------------------------------------------
 //Create cards and store function 
+
+//----------------------------------------------------------------------------------------------
