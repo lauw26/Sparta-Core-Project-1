@@ -16,7 +16,6 @@ var deck = [];
 function start(){
 	//Create deck at start of game
 	createDeck();
-	console.log(deck);
 
 }
 //----------------------------------------------------------------------------------------------
@@ -37,7 +36,11 @@ function start(){
 
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
+function player(funds,hand){
+	this.amount = funds;
+	this.card = hand;
 
+}
 //----------------------------------------------------------------------------------------------
 //Card object blueprint
 function card(num,Suit,play){
