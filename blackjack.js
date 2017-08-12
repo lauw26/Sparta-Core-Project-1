@@ -6,7 +6,8 @@ var $deal = $("#deal");
 //Bet button declared
 
 //Hit button declared
-
+//Its not what it looks like
+var $hit = $("#hit");
 //Stand button declared
 
 //Deck variable which stores card objects
@@ -34,7 +35,7 @@ function buttonsImplement(){
  	//Implement action listener for bet
 
 	//Implement action listener for hit
-
+	$hit.on("click",hit);
 	//Implement action listener for stand
 }
 //----------------------------------------------------------------------------------------------
@@ -60,7 +61,10 @@ function dealing(){
 
 //----------------------------------------------------------------------------------------------
 //Function of hit
+function hit(){
+	console.log("draw new card!");
 
+}
 //----------------------------------------------------------------------------------------------
 //Function for stand
 
