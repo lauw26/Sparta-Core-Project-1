@@ -40,7 +40,6 @@ function buttonsImplement(){
 function dealing(){
 	var card1 = cardDraw();
 	var card2 = cardDraw();
-	console.log(card1,card2);
 
 }
 //----------------------------------------------------------------------------------------------
@@ -58,11 +57,14 @@ function cardDraw(){
 	//Random number between 0-51
 	var randomNum = Math.floor(Math.random() * 52) 
 	//Random number used on array to grab random card
-	if(deck[randomNum].played){
-		cardDraw();
-	}else{
-		return deck[randomNum];
+	//Check if card selected is current in play or already been dealt using a while loop
+	while(deck[randomNum].dealt){
+		//While the card dealt is true select another random number and try again
+		randomNum = Math.floor(Math.random() * 52);
 	}
+	//When a card is found that has not been dealt set the dealt to true and return card
+	deck[randomNum].dealt = true;
+	return deck[randomNum];
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
@@ -76,7 +78,7 @@ function player(funds,card){
 function card(num,Suit,play){
 	this.number = num;
 	this.suit = Suit;
-	this.played = play;
+	this.dealt = play;
 }
 //----------------------------------------------------------------------------------------------
 //Create player function
