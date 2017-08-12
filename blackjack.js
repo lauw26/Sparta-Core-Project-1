@@ -1,6 +1,8 @@
 //Start of code to read entire page
 //----------------------------------------------------------------------------------------------
 //Variables
+//Deal button implemented
+var $deal = $("#deal");
 //Bet button declared
 
 //Hit button declared
@@ -8,16 +10,53 @@
 //Stand button declared
 
 //Deck variable which stores card objects
+var deck = [];
+//player array to store player and dealer
+var players = [];
 //----------------------------------------------------------------------------------------------
 //Start function
+function start(){
+	//Create deck at start of game
+	createDeck();
+	//Create player and dealer at start of game
+	createPlayers();
+	//Implementing the buttons
+	buttonsImplement();
 
+}
 //----------------------------------------------------------------------------------------------
-//Button implementation function 
-	//Implement action listener for bet
+//Button implementation function
+function buttonsImplement(){
+	//Implement action listener for deal
+	$deal.on("click",dealing);
+ 	//Implement action listener for bet
 
 	//Implement action listener for hit
 
 	//Implement action listener for stand
+}
+//----------------------------------------------------------------------------------------------
+//Function of dealing
+function dealing(){
+	var cards = [];
+	//Use for loop to draw cards and store them into dealer and user hands
+	for(var i = 0; i < 4 ; i++){
+		cards.push(cardDraw());
+		console.log(cards[i]);
+		//Push 2 cards to player's and dealer's hand
+		if(i < 2){
+			//pushing to player
+			console.log("player push");
+			players[0].hand.push(cards[i]);
+		}else{
+			//Pushing to dealer
+			console.log("Dealer push");
+			players[1].hand.push(cards[i]);
+		}
+
+	}
+	console.log(players[0],players[1]);
+}
 //----------------------------------------------------------------------------------------------
 //Function of bet
 
@@ -28,15 +67,55 @@
 //Function for stand
 
 //----------------------------------------------------------------------------------------------
+//Function for drawing cards
+function cardDraw(){
+	//Random number between 0-51
+	var randomNum = Math.floor(Math.random() * 52) 
+	//Random number used on array to grab random card
+	//Check if card selected is current in play or already been dealt using a while loop
+	while(deck[randomNum].dealt){
+		//While the card dealt is true select another random number and try again
+		randomNum = Math.floor(Math.random() * 52);
+	}
+	//When a card is found that has not been dealt set the dealt to true and return card
+	deck[randomNum].dealt = true;
+	return deck[randomNum];
+}
+//----------------------------------------------------------------------------------------------
 //Player object blueprint
+function player(funds,card){
+	this.amount = funds;
+	this.hand = card;
 
+}
 //----------------------------------------------------------------------------------------------
 //Card object blueprint
-
+function card(num,Suit,play){
+	this.number = num;
+	this.suit = Suit;
+	this.dealt = play;
+}
 //----------------------------------------------------------------------------------------------
 //Create player function
-
+function createPlayers(){
+	var cards1 = [];
+	var cards2 = [];
+	players.push(new player(500, cards1));
+	players.push(new player(Infinity, cards2));
+}
 //----------------------------------------------------------------------------------------------
-//Create cards and store function 
-
+//Create cards and store in deck function 
+function createDeck(){
+	for(var i = 0 ; i < 52; i++){
+		if (i < 13){ 
+		deck[i] = new card(i+1,"Diamonds",false);
+	}else if (i < 26 && i > 12){ 
+		deck[i] = new card(i-12,"Clubs",false);
+	}else if (i < 39 && i > 25){ 
+		deck[i] = new card(i-25,"Hearts",false);
+	}else 
+		deck[i] = new card(i-38,"Spades",false);
+	}
+}
 //----------------------------------------------------------------------------------------------
+start();
