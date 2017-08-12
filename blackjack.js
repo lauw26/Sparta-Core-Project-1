@@ -85,6 +85,17 @@ function total(){
 	}
 }
 //----------------------------------------------------------------------------------------------
+//Function to find player/dealer standings
+function standings(player1){
+	if(player1.total == 21){
+		player1.state = "blackjack";
+	}else if(player1.total > 21){
+		player1.total = "busted";
+	}else{
+		player1.total = "under21";
+	}
+}
+//----------------------------------------------------------------------------------------------
 //Function for drawing cards
 function cardDraw(){
 	//Random number between 0-51
