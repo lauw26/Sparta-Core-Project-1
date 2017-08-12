@@ -62,7 +62,11 @@ function dealing(){
 //----------------------------------------------------------------------------------------------
 //Function of hit
 function hit(){
-	console.log("draw new card!");
+	//Draw a new card from deck
+	var newCard = cardDraw();
+	//Pushing the new card into the player hand
+	players[0].hand.push(newCard);
+	console.log(players[0],players[1]);
 
 }
 //----------------------------------------------------------------------------------------------
