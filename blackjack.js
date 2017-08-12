@@ -74,15 +74,16 @@ function total(){
 		//First statment updates and stores the player total
 		if(i<players[0].hand.length){
 			playerTotal += players[0].hand[i].number;
-			console.log("Player card number " + players[0].hand[i].number);
 			players[0].total = playerTotal;
 		}else{
 		//Else update the dealer's total by subtracting the player length from i to get the index 0 start
 			dealerTotal += players[1].hand[i-players[0].hand.length].number;
-			console.log("Dealer card number " + players[1].hand[i-players[0].hand.length].number);
 			players[1].total = dealerTotal;
 		}
 	}
+	//Finds the standing after every total function call.
+	standings(players[0]);
+	standings(players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Function to find player/dealer standings
@@ -90,9 +91,9 @@ function standings(player1){
 	if(player1.total == 21){
 		player1.state = "blackjack";
 	}else if(player1.total > 21){
-		player1.total = "busted";
+		player1.state = "busted";
 	}else{
-		player1.total = "under21";
+		player1.state = "under21";
 	}
 }
 //----------------------------------------------------------------------------------------------
