@@ -11,11 +11,16 @@ var $deal = $("#deal");
 
 //Deck variable which stores card objects
 var deck = [];
+//player array to store player and dealer
+var players = [];
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
 	//Create deck at start of game
 	createDeck();
+	//Create player and dealer at start of game
+	createPlayers();
+	console.log(players);
 
 }
 //----------------------------------------------------------------------------------------------
@@ -50,7 +55,11 @@ function card(num,Suit,play){
 }
 //----------------------------------------------------------------------------------------------
 //Create player function
-
+function createPlayers(){
+	var hand = []
+	players.push(new player(500,hand));
+	players.push(new player(Infinity,hand));
+}
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
 function createDeck(){
