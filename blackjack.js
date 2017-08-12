@@ -38,9 +38,24 @@ function buttonsImplement(){
 //----------------------------------------------------------------------------------------------
 //Function of dealing
 function dealing(){
-	var card1 = cardDraw();
-	var card2 = cardDraw();
+	var cards = [];
+	//Use for loop to draw cards and store them into dealer and user hands
+	for(var i = 0; i < 4 ; i++){
+		cards.push(cardDraw());
+		console.log(cards[i]);
+		//Push 2 cards to player's and dealer's hand
+		if(i < 2){
+			//pushing to player
+			console.log("player push");
+			players[0].hand.push(cards[i]);
+		}else{
+			//Pushing to dealer
+			console.log("Dealer push");
+			players[1].hand.push(cards[i]);
+		}
 
+	}
+	console.log(players[0],players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Function of bet
@@ -83,9 +98,10 @@ function card(num,Suit,play){
 //----------------------------------------------------------------------------------------------
 //Create player function
 function createPlayers(){
-	var cards = []
-	players.push(new player(500,cards));
-	players.push(new player(Infinity,cards));
+	var cards1 = [];
+	var cards2 = [];
+	players.push(new player(500, cards1));
+	players.push(new player(Infinity, cards2));
 }
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
