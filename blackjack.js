@@ -34,8 +34,6 @@ function buttonsImplement(){
 	$deal.on("click",dealing);
  	//Implement action listener for bet
 
-	//Implement action listener for hit
-	$hit.on("click",hit);
 	//Implement action listener for stand
 }
 //----------------------------------------------------------------------------------------------
@@ -66,8 +64,8 @@ function hit(){
 	var newCard = cardDraw();
 	//Pushing the new card into the player hand
 	players[0].hand.push(newCard);
+	total();
 	console.log(players[0],players[1]);
-
 }
 //----------------------------------------------------------------------------------------------
 //Function for stand
@@ -93,6 +91,9 @@ function total(){
 	//Check if player is able to continue checking both the total of player and dealer
 	if(playerContinue()){
 		playerContinuation = true;
+		//Implement action listener for hit
+		//Can only hit if player can continue
+		$hit.on("click",hit);
 	}else{
 		//compares total of dealer and player.
 		playerContinuation = false;
@@ -119,7 +120,7 @@ function comparison(){
 	}
 }
 //----------------------------------------------------------------------------------------------
-//Function to see if player can continue
+//Function to see if player and dealer can continue
 function playerContinue(){
 	if((players[0].total < 21)&&(players[1].total < 21) ){
 		return true
