@@ -38,7 +38,9 @@ function buttonsImplement(){
 //----------------------------------------------------------------------------------------------
 //Function of dealing
 function dealing(){
-	console.log("dealing!");
+	var card1 = cardDraw();
+	var card2 = cardDraw();
+	console.log(card1,card2);
 
 }
 //----------------------------------------------------------------------------------------------
@@ -52,7 +54,16 @@ function dealing(){
 
 //----------------------------------------------------------------------------------------------
 //Function for drawing cards
-
+function cardDraw(){
+	//Random number between 0-51
+	var randomNum = Math.floor(Math.random() * 52) 
+	//Random number used on array to grab random card
+	if(deck[randomNum].played){
+		cardDraw();
+	}else{
+		return deck[randomNum];
+	}
+}
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
 function player(funds,card){
