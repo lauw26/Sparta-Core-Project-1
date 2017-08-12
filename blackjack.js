@@ -82,18 +82,18 @@ function total(){
 		}
 	}
 	//Finds the standing after every total function call.
-	standings(players[0]);
-	standings(players[1]);
+	
 }
 //----------------------------------------------------------------------------------------------
-//Function to find player/dealer standings
-function standings(player1){
-	if(player1.total == 21){
-		player1.state = "blackjack";
-	}else if(player1.total > 21){
-		player1.state = "busted";
+//Function to compare and find winner
+function comparison(){
+	//Finds the win,tie and lose conditions by comparing dealer and player value.
+	if(((players[0].total == 21) && (players[1].total != 21))||((players[0].total < 21)||(players[1].total > 21))){
+		conole.log("Player wins!");
+	}else if((players[0].number == players[1].number) && (players[0].number < 21)){
+		console.log("Its a tie!");
 	}else{
-		player1.state = "under21";
+		console.log("Dealer wins!");
 	}
 }
 //----------------------------------------------------------------------------------------------
