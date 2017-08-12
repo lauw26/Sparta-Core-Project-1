@@ -20,16 +20,27 @@ function start(){
 	createDeck();
 	//Create player and dealer at start of game
 	createPlayers();
-	console.log(players);
+	//Implementing the buttons
+	buttonsImplement();
 
 }
 //----------------------------------------------------------------------------------------------
-//Button implementation function 
-	//Implement action listener for bet
+//Button implementation function
+function buttonsImplement(){
+	//Implement action listener for deal
+	$deal.on("click",dealing);
+ 	//Implement action listener for bet
 
 	//Implement action listener for hit
 
 	//Implement action listener for stand
+}
+//----------------------------------------------------------------------------------------------
+//Function of dealing
+function dealing(){
+	console.log("dealing!");
+
+}
 //----------------------------------------------------------------------------------------------
 //Function of bet
 
@@ -40,10 +51,13 @@ function start(){
 //Function for stand
 
 //----------------------------------------------------------------------------------------------
+//Function for drawing cards
+
+//----------------------------------------------------------------------------------------------
 //Player object blueprint
-function player(funds,hand){
+function player(funds,card){
 	this.amount = funds;
-	this.card = hand;
+	this.hand = card;
 
 }
 //----------------------------------------------------------------------------------------------
@@ -56,9 +70,9 @@ function card(num,Suit,play){
 //----------------------------------------------------------------------------------------------
 //Create player function
 function createPlayers(){
-	var hand = []
-	players.push(new player(500,hand));
-	players.push(new player(Infinity,hand));
+	var cards = []
+	players.push(new player(500,cards));
+	players.push(new player(Infinity,cards));
 }
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
