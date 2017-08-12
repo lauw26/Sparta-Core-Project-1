@@ -13,6 +13,8 @@ var $deal = $("#deal");
 var deck = [];
 //player array to store player and dealer
 var players = [];
+//Continue variable for player continuation
+var playerContinuation;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -80,9 +82,14 @@ function total(){
 			players[1].total = dealerTotal;
 		}
 	}
-	//compares total of dealer and player.
-	comparison();
-	
+	//Check if player is able to continue checking both the total of player and dealer
+	if(playerContinue()){
+		playerContinuation = true;
+	}else{
+		//compares total of dealer and player.
+		playerContinuation = false;
+		comparison();
+	}
 }
 //----------------------------------------------------------------------------------------------
 //Function to compare and find winner
@@ -105,7 +112,7 @@ function comparison(){
 }
 //----------------------------------------------------------------------------------------------
 //Function to see if player can continue
-function continue(){
+function playerContinue(){
 	if((players[0].total < 21)&&(players[1].total < 21) ){
 		return true
 	}else{
