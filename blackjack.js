@@ -81,17 +81,22 @@ function total(){
 			players[1].total = dealerTotal;
 		}
 	}
-	//Finds the standing after every total function call.
+	//compare values
+	comparison();
 	
 }
 //----------------------------------------------------------------------------------------------
 //Function to compare and find winner
 function comparison(){
 	//Finds the win,tie and lose conditions by comparing dealer and player value.
-	if(((players[0].total == 21) && (players[1].total != 21))||((players[0].total < 21)||(players[1].total > 21))){
-		conole.log("Player wins!");
-	}else if((players[0].number == players[1].number) && (players[0].number < 21)){
-		console.log("Its a tie!");
+	if(players[0].total < 22){
+		if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
+			console.log("Player wins!");
+		}else if(players[0].total==players[1].total){
+			console.log("Its a tie!");
+		}else{
+			console.log("Dealer wins!");
+		}
 	}else{
 		console.log("Dealer wins!");
 	}
@@ -113,11 +118,10 @@ function cardDraw(){
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
-function player(funds,card,value,play){
+function player(funds,card,value){
 	this.amount = funds;
 	this.hand = card;
 	this.total = value;
-	this.state = play;
 }
 //----------------------------------------------------------------------------------------------
 //Card object blueprint
@@ -132,8 +136,8 @@ function createPlayers(){
 	var cards1 = [];
 	var cards2 = [];
 	//Creating 2 new player objects and pushing them into the players array for storage
-	players.push(new player(500,cards1,0,"under21"));
-	players.push(new player(Infinity,cards2,0,"under21"));
+	players.push(new player(500,cards1,0));
+	players.push(new player(Infinity,cards2,0));
 }
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
