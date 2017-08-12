@@ -13,7 +13,6 @@ var $deal = $("#deal");
 var deck = [];
 //player array to store player and dealer
 var players = [];
-
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -52,6 +51,8 @@ function dealing(){
 			players[1].hand.push(cards[i]);
 		}
 	}
+	total();
+	console.log(players[0],players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Function of bet
@@ -65,7 +66,21 @@ function dealing(){
 //----------------------------------------------------------------------------------------------
 //Function to check current total of hand
 function total(){
-
+	var playerTotal;
+	var dealerTotal;
+	//For loop below combines 2 for loops to total both player and dealer hand at the same time and update their total value.
+	//Adds the length of both the dealer and player hand array to find how many loops
+	for(var i = 0; i<(players[0].hand.length+players[1].hand.length); i++){
+		//First statment updates and stores the player total
+		if(i<players[0].hand.length){
+			playerTotal += players[0].hand[i].number;
+			players[0].total = playerTotal;
+		}else{
+		//Else update the dealer's total by subtracting the player length from i to get the index 0 start
+			dealerTotal += players[1].hand[i-players[0].hand.length].number;
+			players[1].total = dealerTotal;
+		}
+	}
 }
 //----------------------------------------------------------------------------------------------
 //Function for drawing cards
@@ -88,6 +103,7 @@ function player(funds,card,value){
 	this.amount = funds;
 	this.hand = card;
 	this.total = value;
+	//Using the total to find state of player
 	if(this.total == 21){
 		this.state = "blackjack";
 	}else if(this.total > 21){
@@ -108,9 +124,9 @@ function card(num,Suit,play){
 function createPlayers(){
 	var cards1 = [];
 	var cards2 = [];
+	//Creating 2 new player objects and pushing them into the players array for storage
 	players.push(new player(500,cards1,0));
 	players.push(new player(Infinity,cards2,0));
-	console.log(players[0],players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
