@@ -52,7 +52,6 @@ function dealing(){
 		}
 	}
 	total();
-	console.log(players[0],players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Function of bet
@@ -102,6 +101,15 @@ function comparison(){
 	}else{
 		//If player is over 21 then dealer wins by default
 		console.log("Dealer wins!");
+	}
+}
+//----------------------------------------------------------------------------------------------
+//Function to see if player can continue
+function continue(){
+	if((players[0].total < 21)&&(players[1].total < 21) ){
+		return true
+	}else{
+		return false
 	}
 }
 //----------------------------------------------------------------------------------------------
