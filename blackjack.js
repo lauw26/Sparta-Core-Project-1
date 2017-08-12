@@ -81,7 +81,7 @@ function total(){
 			players[1].total = dealerTotal;
 		}
 	}
-	//compare values
+	//compares total of dealer and player.
 	comparison();
 	
 }
@@ -89,7 +89,9 @@ function total(){
 //Function to compare and find winner
 function comparison(){
 	//Finds the win,tie and lose conditions by comparing dealer and player value.
+	//Checks if player is bust or not
 	if(players[0].total < 22){
+		//If player is not bust then do comparison for win tie or lose
 		if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
 			console.log("Player wins!");
 		}else if(players[0].total==players[1].total){
@@ -98,6 +100,7 @@ function comparison(){
 			console.log("Dealer wins!");
 		}
 	}else{
+		//If player is over 21 then dealer wins by default
 		console.log("Dealer wins!");
 	}
 }
