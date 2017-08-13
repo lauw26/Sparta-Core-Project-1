@@ -9,13 +9,15 @@ var $deal = $("#deal");
 //Its not what it looks like
 var $hit = $("#hit");
 //Stand button declared
-
+var $stand = $("#stand");
 //Deck variable which stores card objects
 var deck = [];
 //player array to store player and dealer
 var players = [];
 //Continue variable for player continuation
 var playerContinuation;
+//Player variable to know which who wants to hit or stand
+var player;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -47,6 +49,7 @@ function dealing(){
 		if(i < 2){
 			//pushing to player
 			players[0].hand.push(cards[i]);
+			console.log("Player hand " + cards[i].number);
 		}else{
 			//Pushing to dealer
 			players[1].hand.push(cards[i]);
@@ -63,9 +66,10 @@ function hit(){
 	//Draw a new card from deck
 	var newCard = cardDraw();
 	//Pushing the new card into the player hand
-	players[0].hand.push(newCard);
+	player.hand.push(newCard);
+	console.log("Player draws " + newCard.number);
+	//Run total again to update and check for new total
 	total();
-	console.log(players[0],players[1]);
 }
 //----------------------------------------------------------------------------------------------
 //Function for stand
@@ -93,7 +97,9 @@ function total(){
 		playerContinuation = true;
 		//Implement action listener for hit
 		//Can only hit if player can continue
+		player = players[0];
 		$hit.on("click",hit);
+		console.log("Player current total " + players[0].total);
 	}else{
 		//compares total of dealer and player.
 		playerContinuation = false;
@@ -118,6 +124,8 @@ function comparison(){
 		//If player is over 21 then dealer wins by default
 		console.log("Dealer wins!");
 	}
+	console.log("Player",players[0],players[0].total);
+	console.log("Dealer",players[1],players[1].total);
 }
 //----------------------------------------------------------------------------------------------
 //Function to see if player and dealer can continue
@@ -143,6 +151,8 @@ function cardDraw(){
 	deck[randomNum].dealt = true;
 	return deck[randomNum];
 }
+//----------------------------------------------------------------------------------------------
+//Function for ai
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
 function player(funds,card,value){
