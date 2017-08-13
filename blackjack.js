@@ -1,6 +1,8 @@
 //Start of code to read entire page
 //----------------------------------------------------------------------------------------------
 //Variables
+//Display for player information
+var $pDisplay = $("#playerStats");
 //Deal button implemented
 var $deal = $("#deal");
 //Bet button declared
@@ -115,6 +117,7 @@ function total(){
 			players[1].total = dealerTotal;
 		}
 	}
+	displayPlayer();
 	//Check if player is able to continue checking both the total of player and dealer
 	if(playerContinue()){
 		console.log("Player current total " + players[0].total);
@@ -196,6 +199,12 @@ function dealerDecision(){
 	}else{
 
 	}
+}
+//----------------------------------------------------------------------------------------------
+//Function of display player information
+function displayPlayer(){
+	console.log("Display working!");
+	$pDisplay.html("Player hand total: " + players[0].total);
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
