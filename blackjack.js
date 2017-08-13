@@ -18,6 +18,8 @@ var players = [];
 var playerContinuation;
 //Player variable to know which who wants to hit or stand
 var player;
+//Keeps track of the turns to know whose turn it is
+var turns = 0;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -61,19 +63,28 @@ function dealing(){
 //Function of bet
 
 //----------------------------------------------------------------------------------------------
-//Function of hit
+//Function of hit 
 function hit(){
-	//Draw a new card from deck
-	var newCard = cardDraw();
-	//Pushing the new card into the player hand
-	player.hand.push(newCard);
-	console.log("Player draws " + newCard.number);
-	//Run total again to update and check for new total
-	total();
+	//player draws new card and then deler makes decision
+	player = players[0];
+	hitCard();
+	dealerDecision();
 }
 //----------------------------------------------------------------------------------------------
 //Function for stand
 
+//----------------------------------------------------------------------------------------------
+//Function to hit card
+function hitCard(){
+	//Draw a new card from deck
+	var newCard = cardDraw();
+	//Pushing the new card into the player hand depending who called push.
+	//This allow for both dealer and player to use same function
+	player.hand.push(newCard);
+	console.log("draws " + newCard.number);
+	//Run total again to update and check for new total
+	total();
+}
 //----------------------------------------------------------------------------------------------
 //Function to check current total of hand
 function total(){
@@ -97,7 +108,6 @@ function total(){
 		playerContinuation = true;
 		//Implement action listener for hit
 		//Can only hit if player can continue
-		player = players[0];
 		$hit.on("click",hit);
 		console.log("Player current total " + players[0].total);
 	}else{
@@ -152,7 +162,18 @@ function cardDraw(){
 	return deck[randomNum];
 }
 //----------------------------------------------------------------------------------------------
-//Function for ai
+//Function for dealer to decide if to draw card
+function dealerDecision(){
+	//If dealer hand is smaller than 14 then draw a card else stand
+	console.log("Dealer's turn");
+	if(players[1].total < 14){
+		player = players[1];
+		console.log("Dealer hits!");
+		hitCard();
+	}else{
+		console.log("Dealer stands!");
+	}
+}
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
 function player(funds,card,value){
