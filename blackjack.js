@@ -14,12 +14,10 @@ var $stand = $("#stand");
 var deck = [];
 //player array to store player and dealer
 var players = [];
-//Continue variable for player continuation
-var playerContinuation;
 //Player variable to know which who wants to hit or stand
 var player;
-//Keeps track of the turns to know whose turn it is
-var turns = 0;
+//Dealer standing checks if dealer has stand
+var dealerStand;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -37,8 +35,6 @@ function buttonsImplement(){
 	//Implement action listener for deal
 	$deal.on("click",dealing);
  	//Implement action listener for bet
-
-	//Implement action listener for stand
 }
 //----------------------------------------------------------------------------------------------
 //Function of dealing
@@ -72,7 +68,15 @@ function hit(){
 }
 //----------------------------------------------------------------------------------------------
 //Function for stand
-
+function stand(){
+	console.log("Player stands");
+	//Check if dealer still wants to carry on
+	do{
+		dealerDecision();
+	}while(!dealerStand);
+	//Once dealer has finished his go compare the two final scores
+	total();
+}
 //----------------------------------------------------------------------------------------------
 //Function to hit card
 function hitCard(){
@@ -81,7 +85,6 @@ function hitCard(){
 	//Pushing the new card into the player hand depending who called push.
 	//This allow for both dealer and player to use same function
 	player.hand.push(newCard);
-	console.log("draws " + newCard.number);
 	//Run total again to update and check for new total
 	total();
 }
@@ -105,14 +108,15 @@ function total(){
 	}
 	//Check if player is able to continue checking both the total of player and dealer
 	if(playerContinue()){
-		playerContinuation = true;
 		//Implement action listener for hit
 		//Can only hit if player can continue
 		$hit.on("click",hit);
+		//Implement action listener for stand
+		//Can only stand if player can continue
+		$stand.on("click",stand);
 		console.log("Player current total " + players[0].total);
 	}else{
 		//compares total of dealer and player.
-		playerContinuation = false;
 		comparison();
 	}
 }
@@ -166,12 +170,14 @@ function cardDraw(){
 function dealerDecision(){
 	//If dealer hand is smaller than 14 then draw a card else stand
 	console.log("Dealer's turn");
-	if(players[1].total < 14){
+	if((players[1].total < 14)&&(players[0].total < 21)){
 		player = players[1];
 		console.log("Dealer hits!");
 		hitCard();
+		dealerStand = false;
 	}else{
 		console.log("Dealer stands!");
+		dealerStand = true;
 	}
 }
 //----------------------------------------------------------------------------------------------
@@ -194,8 +200,8 @@ function createPlayers(){
 	var cards1 = [];
 	var cards2 = [];
 	//Creating 2 new player objects and pushing them into the players array for storage
-	players.push(new player(500,cards1,0));
-	players.push(new player(Infinity,cards2,0));
+	players.push(new player(500,cards1,0,false));
+	players.push(new player(Infinity,cards2,0,false));
 }
 //----------------------------------------------------------------------------------------------
 //Create cards and store in deck function 
