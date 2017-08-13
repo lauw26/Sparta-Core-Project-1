@@ -1,6 +1,8 @@
 //Start of code to read entire page
 //----------------------------------------------------------------------------------------------
 //Variables
+//Displays outcome of round to html
+var $result = $("#result");
 //Display for player information
 var $pDisplay = $("#playerStats");
 //Deal button implemented
@@ -134,15 +136,15 @@ function comparison(){
 	if(players[0].total < 22){
 		//If player is not bust then do comparison for win tie or lose
 		if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
-			console.log("Player wins!");
+			outcome(" Player wins!");
 		}else if(players[0].total==players[1].total){
-			console.log("Its a tie!");
+			outcome(" Its a tie!");
 		}else{
-			console.log("Dealer wins!");
+			outcome(" Dealer wins!");
 		}
 	}else{
 		//If player is over 21 then dealer wins by default
-		console.log("Dealer wins!");
+		outcome(" Dealer wins!");
 	}
 	result++;
 
@@ -203,8 +205,12 @@ function dealerDecision(){
 //----------------------------------------------------------------------------------------------
 //Function of display player information
 function displayPlayer(){
-	console.log("Display working!");
 	$pDisplay.html("Player hand total: " + players[0].total);
+}
+//----------------------------------------------------------------------------------------------
+//Function to display outcome of round
+function outcome(resulting){
+	$result.html("Dealer hand total: " + players[1].total + resulting);
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
