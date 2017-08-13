@@ -8,7 +8,9 @@ var $pDisplay = $("#playerStats");
 //Deal button implemented
 var $deal = $("#deal");
 //Bet button declared
-
+var $bet = $("#bet");
+//Amount bos is decleared to obtain user bet
+var $amount = $("#amount");
 //Hit button declared
 //Its not what it looks like
 var $hit = $("#hit");
@@ -24,6 +26,8 @@ var player;
 var dealerStand;
 //Result variable to see the result of the round, 0 means no result and 1 means theres result
 var result = 0;
+//Pot variable to contain the amount betted
+var pot = 0;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -41,11 +45,18 @@ function buttonsImplement(){
 	//Implement action listener for deal
 	$deal.on("click",dealing);
  	//Implement action listener for bet
-
+ 	$bet.on("click",bet);
  	//Implement action listener for hit
 	$hit.on("click",hit);
 	//Implement action listener for stand
 	$stand.on("click",stand);
+}
+//----------------------------------------------------------------------------------------------
+//Function of bet
+function bet(){
+
+
+
 }
 //----------------------------------------------------------------------------------------------
 //Function of dealing
@@ -214,10 +225,10 @@ function outcome(resulting){
 	window.setTimeout(resetOutcome, 3000);	
 }
 //----------------------------------------------------------------------------------------------
-//Function to reset display outcome of round
+//Function to reset display outcome of the round
 function resetOutcome(){
 	$pDisplay.html("Player hand total: " + 0);
-	$result.html("Dealer hand total: " + 0 );
+	$result.html(" ");
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
