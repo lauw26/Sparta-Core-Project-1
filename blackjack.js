@@ -155,7 +155,7 @@ function comparison(){
 	for(var i = 0; i<players.length; i++){
 		players[i].total = 0;
 		players[i].hand = [];
-	}	
+	}
 	console.log("Player",players[0],players[0].total);
 	console.log("Dealer",players[1],players[1].total);
 }
@@ -211,6 +211,13 @@ function displayPlayer(){
 //Function to display outcome of round
 function outcome(resulting){
 	$result.html("Dealer hand total: " + players[1].total + resulting);
+	window.setTimeout(resetOutcome, 3000);	
+}
+//----------------------------------------------------------------------------------------------
+//Function to reset display outcome of round
+function resetOutcome(){
+	$pDisplay.html("Player hand total: " + 0);
+	$result.html("Dealer hand total: " + 0 );
 }
 //----------------------------------------------------------------------------------------------
 //Player object blueprint
