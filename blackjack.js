@@ -18,6 +18,8 @@ var players = [];
 var player;
 //Dealer standing checks if dealer has stand
 var dealerStand;
+//Result variable to see the result of the round, 0 means no result and 1 means theres result
+var result = 0;
 //----------------------------------------------------------------------------------------------
 //Start function
 function start(){
@@ -35,11 +37,18 @@ function buttonsImplement(){
 	//Implement action listener for deal
 	$deal.on("click",dealing);
  	//Implement action listener for bet
+
+ 	//Implement action listener for hit
+	$hit.on("click",hit);
+	//Implement action listener for stand
+	$stand.on("click",stand);
 }
 //----------------------------------------------------------------------------------------------
 //Function of dealing
 function dealing(){
 	var cards = [];
+	//Result resets result upon first dealing move
+	result = 0;
 	//Use for loop to draw cards and store them into dealer and user hands
 	for(var i = 0; i < 4 ; i++){
 		cards.push(cardDraw());
@@ -75,7 +84,7 @@ function stand(){
 		dealerDecision();
 	}while(!dealerStand);
 	//Once dealer has finished his go compare the two final scores
-	total();
+	comparison();
 }
 //----------------------------------------------------------------------------------------------
 //Function to hit card
@@ -108,12 +117,6 @@ function total(){
 	}
 	//Check if player is able to continue checking both the total of player and dealer
 	if(playerContinue()){
-		//Implement action listener for hit
-		//Can only hit if player can continue
-		$hit.on("click",hit);
-		//Implement action listener for stand
-		//Can only stand if player can continue
-		$stand.on("click",stand);
 		console.log("Player current total " + players[0].total);
 	}else{
 		//compares total of dealer and player.
@@ -138,6 +141,16 @@ function comparison(){
 		//If player is over 21 then dealer wins by default
 		console.log("Dealer wins!");
 	}
+	result++;
+
+	console.log("Player",players[0],players[0].total);
+	console.log("Dealer",players[1],players[1].total);
+	//Resetting player hand and total for next round, funds is not resetted to keep the same
+	console.log("Round over resetting");
+	for(var i = 0; i<players.length; i++){
+		players[i].total = 0;
+		players[i].hand = [];
+	}	
 	console.log("Player",players[0],players[0].total);
 	console.log("Dealer",players[1],players[1].total);
 }
@@ -169,15 +182,19 @@ function cardDraw(){
 //Function for dealer to decide if to draw card
 function dealerDecision(){
 	//If dealer hand is smaller than 14 then draw a card else stand
-	console.log("Dealer's turn");
-	if((players[1].total < 14)&&(players[0].total < 21)){
-		player = players[1];
-		console.log("Dealer hits!");
-		hitCard();
-		dealerStand = false;
+	if(result == 0){
+		console.log("Dealer's turn");
+		if((players[1].total < 15)&&(players[0].total < 21)){
+			player = players[1];
+			console.log("Dealer hits!");
+			dealerStand = false;
+			hitCard();
+		}else{
+			console.log("Dealer stands!");
+			dealerStand = true;
+		}
 	}else{
-		console.log("Dealer stands!");
-		dealerStand = true;
+
 	}
 }
 //----------------------------------------------------------------------------------------------
