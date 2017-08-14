@@ -1,9 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script
+  	src="http://code.jquery.com/jquery-3.2.1.js"
+  	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  	crossorigin="anonymous"></script>
+  	<script src= "blackjack.js" async></script>
+  	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<title>Sparta Core Project 1</title>
 </head>
 <body>
-	<h1>Sparta Core Project 1</h1>
+<div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="jumbotron">
+                    <h1>Sparta Core Project 1</h1>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div class = "container">
+    	<div  class="row">
+    		<div class = "col-md-2"></div>
+    		<div class ="col-md-3">
+				Bet: <input type="text" name="betting" value = "" id ="amount"><br>
+				<button type="button" id = "bet">Bet</button>
+    			<!-- Deal button to draw 2 cards for both dealer and player -->
+				<button type="button" id = "deal">Deal</button>
+				<!-- Hit button to draw 1 card for player  -->
+				<button type="button" id = "hit">Hit</button>
+				<!-- Stand button to stay with player's current hand-->
+				<button type="button" id = "stand">Stand</button>
+    		</div>
+    		<div class = "col-md-2">
+    			<p id="playerAmount"></p>
+    			<p id = "betAmount"></p>
+    			<p id="pot"></p>
+    		</div>
+    		<div class = "col-md-2" id = "playerStats"></div>
+    		<div class = "col-md-2" id = "result"></div>
+    	</div>
+    </div>
+	
 </body>
 </html>
