@@ -35,6 +35,8 @@ $(function(event){
 	var result = 0;
 	//Pot variable to contain the amount betted
 	var pot = 0;
+	//Varible to check the amount of cards played
+	var cardsPlayed = 0;
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -46,7 +48,30 @@ $(function(event){
 		buttonsImplement();
 		//Display player's funds at the start of the game
 		playerFunds();
+		//Disable some of the non needed buttons at the start
+		startButtons();
 
+	}
+	//----------------------------------------------------------------------------------------------
+	//Start buttons that are disabled
+	function startButtons(){
+		enableButton($bet);
+		disableButton($deal);
+		disableButton($hit);
+		disableButton($stand);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Buttons activated and disabled after betting
+	function betButtons(){
+		disableButton($bet);
+		enableButton($deal);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Buttons activated and disabled after dealing
+	function dealButtons(){
+		disableButton($deal);
+		enableButton($hit);
+		enableButton($stand);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Button implementation function
@@ -72,6 +97,7 @@ $(function(event){
 		}else{
 			players[0].amount -= playerBet;
 			inputPot(playerBet);	
+			betButtons();
 		}
 	}
 	//----------------------------------------------------------------------------------------------
@@ -148,11 +174,26 @@ $(function(event){
 		for(var i = 0; i<(players[0].hand.length+players[1].hand.length); i++){
 			//First statment updates and stores the player total
 			if(i<players[0].hand.length){
-				playerTotal += players[0].hand[i].number;
+				var addValue = 0;
+				//Checks value of cards so K,Q,J cards are valued at 10
+				if(players[0].hand[i].number < 10){
+					addValue = players[0].hand[i].number;
+				}else{
+					addValue = 10;
+				}
+
+				playerTotal += addValue;
 				players[0].total = playerTotal;
 			}else{
 			//Else update the dealer's total by subtracting the player length from i to get the index 0 start
-				dealerTotal += players[1].hand[i-players[0].hand.length].number;
+				var addValue = 0;
+				//Checks value of cards so K,Q,J cards are valued at 10
+				if(players[1].hand[i-players[0].hand.length].number < 10){
+					addValue = players[1].hand[i-players[0].hand.length].number;
+				}else{
+					addValue = 10;
+				}
+				dealerTotal += addValue;
 				players[1].total = dealerTotal;
 			}
 		}
@@ -160,6 +201,7 @@ $(function(event){
 		//Check if player is able to continue checking both the total of player and dealer
 		if(playerContinue()){
 			console.log("Player current total " + players[0].total);
+			dealButtons();
 		}else{
 			//compares total of dealer and player.
 			comparison();
@@ -200,7 +242,12 @@ $(function(event){
 		console.log("Dealer",players[1],players[1].total);
 	}
 	//----------------------------------------------------------------------------------------------
-	//Function to see if player and dealer can continue
+	//Function to check the state of the deck as well as play amount
+	function gameContinue(){
+
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to see if player and dealer can continue to play for that round
 	function playerContinue(){
 		if((players[0].total < 21)&&(players[1].total < 21) ){
 			return true
@@ -243,6 +290,16 @@ $(function(event){
 		}
 	}
 	//----------------------------------------------------------------------------------------------
+	//Function to grey out and disable buttons
+	function disableButton(button){
+		button.prop('disabled',true).addClass('disabled');
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to restore button functions
+	function enableButton(button){
+		button.prop('disabled',false).removeClass('disabled');
+	}
+	//----------------------------------------------------------------------------------------------
 	//Function of display player information
 	function displayPlayer(){
 		$pDisplay.html("Player hand total: " + players[0].total);
@@ -260,6 +317,8 @@ $(function(event){
 		$result.html(" ");
 		$betDisplay.html("Player bets: 0");
 		$potDisplay.html("Pot total: 0");
+		//Resetting buttons along with display
+		startButtons();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Player object blueprint
