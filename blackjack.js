@@ -39,6 +39,10 @@ $(function(event){
 	var pot = 0;
 	//Varible to check the amount of cards played
 	var cardsPlayed = 0;
+	//Test flip card
+	var $flip = $("#flip");
+	var $cardFlip = $("#card");
+	var flip = 0;
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -95,6 +99,18 @@ $(function(event){
 		$stand.on("click",stand);
 		// Implement listner for cash out button
 		$cash.on("click",cashOut);
+		//Card flips
+		$flip.on("click",flipCard);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to flip card
+	function flipCard(){
+		if(flip%2==0){
+			$cardFlip.addClass("flipped");
+		}else{
+			$cardFlip.removeClass("flipped");
+		}
+		flip++;
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function for cashing out

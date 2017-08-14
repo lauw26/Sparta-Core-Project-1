@@ -7,6 +7,7 @@
   	crossorigin="anonymous"></script>
   	<script src= "blackjack.js" async></script>
   	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>Sparta Core Project 1</title>
 </head>
 <body>
@@ -36,6 +37,8 @@
 				<button type="button" id = "stand">Stand</button>
 				<!--Cash out button to end game and store value into score board-->
 				<button type="button" id = "cashOut">Cash out</button>
+				<!--flip button-->
+				<button type="button" id = "flip">Flip</button>
     		</div>
     		<div class = "col-md-2">
     			<p id="playerAmount"></p>
@@ -47,12 +50,36 @@
     	</div>
     </div>
    <!--  Table contianer of them for the game -->
-    <div class = "container">
-   <!-- Player side of table -->
-    	<div class = "container">
-    	</div>
-    <!-- Dealer side of table -->
-    	<div class = "container">
+    <div class = "container"">
+    	<div class="row " id = "table">
+    		<div class ="col-md-12">
+		    <!-- Player side of table -->
+		    	<div class = "container">
+		    		<div class="row " id = "playerSide">
+    					<div class ="col-md-12">
+    						<section class="cardContainer">
+  								<div id="card">
+								    <figure class="front"></figure>
+								    <figure class="back">
+									    <div class="outline">
+												<div class="top"><span>A</span><span>&hearts;</span></div>
+												<h1 class = "middle">&hearts;</h1>
+												<div class="bottom"><span>&hearts;</span><span>A</span></div>
+											</div>
+								    </figure>
+								  </div>
+								</section>
+    					</div>
+    				</div>
+		    	</div>
+		    <!-- Dealer side of table -->
+		    	<div class = "container">
+		    		<div class="row " id = "dealerSide">
+    					<div class ="col-md-12">
+    					</div>
+    				</div>
+		    	</div>
+	    	</div>
     	</div>
     </div>
 </body>
