@@ -40,12 +40,18 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
+		//Sets up everything for the game
+		setUpGame();
+		//Implementing the buttons
+		buttonsImplement();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to set up game
+	function setUpGame(){
 		//Create deck at start of game
 		createDeck();
 		//Create player and dealer at start of game
 		createPlayers();
-		//Implementing the buttons
-		buttonsImplement();
 		//Display player's funds at the start of the game
 		playerFunds();
 		//Disable some of the non needed buttons at the start
@@ -244,7 +250,21 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
 	function gameContinue(){
-
+		if((cardsPlayed > 43)||(players[0].amount == 0)){
+			return false
+		}else{
+			return true
+		}
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to reset gamme
+	function gameReset(){
+		//Empty the major variables
+		deck = [];
+		players =[];
+		cardsPlayed = 0;
+		//sets up game again
+		setUpGame();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
@@ -268,6 +288,7 @@ $(function(event){
 		}
 		//When a card is found that has not been dealt set the dealt to true and return card
 		deck[randomNum].dealt = true;
+		cardsPlayed++;
 		return deck[randomNum];
 	}
 	//----------------------------------------------------------------------------------------------
