@@ -41,8 +41,8 @@ $(function(event){
 	var cardsPlayed = 0;
 	//Test flip card
 	var $flip = $("#flip");
-	var $cardFlip = $("#card");
-	var flip = 0;
+	//Declare player side display
+	var $playerSide = $("#playerSide");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -100,18 +100,78 @@ $(function(event){
 		// Implement listner for cash out button
 		$cash.on("click",cashOut);
 		//Card flips
-		$flip.on("click",flipCard);
+		$flip.on("click",playerDisplayCard);
 	}
 	//----------------------------------------------------------------------------------------------
-	//Function to flip card
-	function flipCard(){
-		if(flip%2==0){
-			$cardFlip.addClass("flipped");
-		}else{
-			$cardFlip.removeClass("flipped");
+	//Function to check card display for which player
+	function playerDisplayCard(playerSuit,playerNum){
+		if(playerTurn == players[0]){
+			createPlayerCard(playerSuit,playerNum);
 		}
-		flip++;
 	}
+	//----------------------------------------------------------------------------------------------
+	//Function to create a card for display
+	function createPlayerCard(suit,number){
+		var displaySuit = determineSuit(suit);
+		var displayNum =  determineNum(number);
+		var color = determineCol(suit);
+		//Creating the elements to be used as the card
+		var $container = $("<div></div>");
+		$container.addClass("outline");
+		var  $top = $("<div><span>"+displayNum+"</span><span>"+displaySuit+"</span></div>");
+		$top.addClass("top");
+		var $middle = $("<h1></h1>");
+		$middle.addClass("middle");
+		var $bottom = $("<div><span>"+displaySuit+"</span><span>"+displayNum+"</span></div>");
+		$bottom.addClass("bottom");
+		//Append all card elements inside the card then appending the card to html
+		$container.append($top,$middle,$bottom);
+		$playerSide.append($container);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to determine color of card
+	//----------------------------------------------------------------------------------------------
+	//Function to determine suit to be displayed
+	function determineSuit(suit){
+		var suitDisplayed;
+		switch(suit){
+			case "Diamonds":
+				suitDisplayed = "&diams;";
+			break;
+			case "Clubs":
+				suitDisplayed = "&clubs;";
+			break;
+			case "Hearts":
+				suitDisplayed = "&hearts;";
+			break;
+			default:
+				suitDisplayed = "&spades;";
+		}
+		return suitDisplayed
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to determine number to be displayed
+	function determineNum(cardNumber){
+		var numberDisplayed;
+		switch(cardNumber.toString()){
+			case "1":
+				numberDisplayed = "A";
+			break;
+			case "11":
+				numberDisplayed = "J";
+			break;
+			case "12":
+				numberDisplayed = "Q";
+			break;
+			case "13":
+				numberDisplayed = "K";
+			break;
+			default:
+				numberDisplayed= cardNumber.toString();
+		}
+		return numberDisplayed;
+	}
+
 	//----------------------------------------------------------------------------------------------
 	//Function for cashing out
 	function cashOut(){
