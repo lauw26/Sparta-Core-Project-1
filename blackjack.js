@@ -6,6 +6,12 @@ $(function(event){
 	var $result = $("#result");
 	//Display for player information
 	var $pDisplay = $("#playerStats");
+	//Declare display for pot
+	var $potDisplay = $("#pot");
+	//Declare display for the amount player bets
+	var $betDisplay = $("#betAmount");
+	//Declare display for player fundings
+	var $amountDisplay= $("#playerAmount");
 	//Deal button implemented
 	var $deal = $("#deal");
 	//Bet button declared
@@ -38,6 +44,8 @@ $(function(event){
 		createPlayers();
 		//Implementing the buttons
 		buttonsImplement();
+		//Display player's funds at the start of the game
+		playerFunds();
 
 	}
 	//----------------------------------------------------------------------------------------------
@@ -57,15 +65,27 @@ $(function(event){
 	function bet(){
 		//grab value user inputed into text box
 		var playerBet = parseInt($amount.val());
-		console.log($amount.val());
-		console.log("Player bets " + playerBet);
-
-
+		//Checks if input is a number or larger than player funds
+		if((playerBet>players[0].amount)||isNaN(playerBet)){
+			//If so tell player to enter an appropirate amount
+			$potDisplay.html("Invalid input!\nPlease enter an appropirate amount");
+		}else{
+			players[0].amount -= playerBet;
+			inputPot(playerBet);	
+		}
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of pot
-	function inputPot(){
-
+	function inputPot(betAmount){
+		pot += (betAmount*2);
+		$betDisplay.html("Player bets: " + betAmount);
+		$potDisplay.html("Pot total: " + pot);
+		playerFunds();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function for displaying player funds
+	function playerFunds(betAmount){
+		$amountDisplay.html("Player amount: " + players[0].amount);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of dealing
@@ -235,6 +255,8 @@ $(function(event){
 	function resetOutcome(){
 		$pDisplay.html("Player hand total: " + 0);
 		$result.html(" ");
+		$betDisplay.html("Player bets: 0");
+		$potDisplay.html("Pot total: 0");
 	}
 	//----------------------------------------------------------------------------------------------
 	//Player object blueprint
