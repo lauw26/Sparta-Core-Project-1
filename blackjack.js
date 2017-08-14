@@ -174,8 +174,10 @@ $(function(event){
 			//If player is not bust then do comparison for win tie or lose
 			if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
 				outcome(" Player wins!");
+				players[0].amount += pot;
 			}else if(players[0].total==players[1].total){
 				outcome(" Its a tie!");
+				players[0].amount += (pot/2);
 			}else{
 				outcome(" Dealer wins!");
 			}
@@ -184,7 +186,7 @@ $(function(event){
 			outcome(" Dealer wins!");
 		}
 		result++;
-
+		playerFunds();
 		console.log("Player",players[0],players[0].total);
 		console.log("Dealer",players[1],players[1].total);
 		//Resetting player hand and total for next round, funds is not resetted to keep the same
@@ -193,6 +195,7 @@ $(function(event){
 			players[i].total = 0;
 			players[i].hand = [];
 		}
+		pot = 0;
 		console.log("Player",players[0],players[0].total);
 		console.log("Dealer",players[1],players[1].total);
 	}
@@ -253,7 +256,7 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to reset display outcome of the round
 	function resetOutcome(){
-		$pDisplay.html("Player hand total: " + 0);
+		$pDisplay.html("Player hand total: 0");
 		$result.html(" ");
 		$betDisplay.html("Player bets: 0");
 		$potDisplay.html("Pot total: 0");
