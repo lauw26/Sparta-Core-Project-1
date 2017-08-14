@@ -43,6 +43,10 @@ $(function(event){
 	var $flip = $("#flip");
 	//Declare player side display
 	var $playerSide = $("#playerSide");
+	//Declare dealer side display
+	var $dealerSide = $("#dealerSide");
+	//Declare firstCard variable to display first dealer card 
+	var firstCard = 0;
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -105,16 +109,22 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to check card display for which player
 	function playerDisplayCard(playerSuit,playerNum){
-		if(playerTurn == players[0]){
-			createPlayerCard(playerSuit,playerNum);
+		//If player then display card
+		console.log(playerTurn);
+		if(playerTurn.id == "player"){
+			createPlayerCard(playerSuit,playerNum,$playerSide);
+		}else{
+			createPlayerCard(playerSuit,playerNum,$dealerSide);
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to create a card for display
-	function createPlayerCard(suit,number){
+	function createPlayerCard(suit,number,side){
+		console.log("create card");
 		var displaySuit = determineSuit(suit);
 		var displayNum =  determineNum(number);
-		var color = determineCol(suit);
+		var color = determineColor(suit);
 		//Creating the elements to be used as the card
 		var $container = $("<div></div>");
 		$container.addClass("outline");
@@ -126,10 +136,25 @@ $(function(event){
 		$bottom.addClass("bottom");
 		//Append all card elements inside the card then appending the card to html
 		$container.append($top,$middle,$bottom);
-		$playerSide.append($container);
+		$container.addClass(color);
+
+		side.append($container);
+		//Makes the class flipped by using adding the back class
+		if((firstCard>0)&&playerTurn.id == "dealer"){
+			$container.addClass("back");
+		}
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to determine color of card
+	function determineColor(colorSuit){
+		console.log("Color card");
+		var colorReturned;
+		if((colorSuit=="Diamonds")||(colorSuit=="Hearts")){
+			return "red"
+		}else{
+			return "black"
+		}
+	}
 	//----------------------------------------------------------------------------------------------
 	//Function to determine suit to be displayed
 	function determineSuit(suit){
@@ -191,6 +216,7 @@ $(function(event){
 			inputPot(playerBet);	
 			betButtons();
 		}
+		playerTurn = players[0];
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of pot
@@ -214,13 +240,18 @@ $(function(event){
 		//Use for loop to draw cards and store them into dealer and user hands
 		for(var i = 0; i < 4 ; i++){
 			cards.push(cardDraw());
+			//Display dealt cards
 			//Push 2 cards to player's and dealer's hand
 			if(i < 2){
 				//pushing to player
 				players[0].hand.push(cards[i]);
 				console.log("Player hand " + cards[i].number);
+				if(i == 1){
+					playerTurn = players[1];
+				}
 			}else{
 				//Pushing to dealer
+				firstCard++;
 				players[1].hand.push(cards[i]);
 			}
 		}
@@ -330,6 +361,7 @@ $(function(event){
 			players[i].hand = [];
 		}
 		pot = 0;
+		firstCard = 0;
 		console.log("Player",players[0],players[0].total);
 		console.log("Dealer",players[1],players[1].total);
 	}
@@ -377,6 +409,8 @@ $(function(event){
 		//When a card is found that has not been dealt set the dealt to true and return card
 		deck[randomNum].dealt = true;
 		cardsPlayed++;
+		//Display card drawed on html
+		playerDisplayCard(deck[randomNum].suit,deck[randomNum].number);
 		return deck[randomNum];
 	}
 	//----------------------------------------------------------------------------------------------
@@ -435,8 +469,8 @@ $(function(event){
 		var cards1 = [];
 		var cards2 = [];
 		//Creating 2 new player objects and pushing them into the players array for storage
-		players.push(new player(500,cards1,0));
-		players.push(new player(Infinity,cards2,0));
+		players.push(new player(500,cards1,0,"player"));
+		players.push(new player(Infinity,cards2,0,"dealer"));
 	}
 	//----------------------------------------------------------------------------------------------
 	//Create cards and store in deck function 
@@ -454,7 +488,8 @@ $(function(event){
 	}
 	//----------------------------------------------------------------------------------------------
 	//Player object blueprint
-	function player(funds,card,value){
+	function player(funds,card,value,identity){
+		this.id = identity;
 		this.amount = funds;
 		this.hand = card;
 		this.total = value;
