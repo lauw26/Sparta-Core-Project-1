@@ -23,12 +23,14 @@ $(function(event){
 	var $hit = $("#hit");
 	//Stand button declared
 	var $stand = $("#stand");
+	//cashOut button declared
+	var $cash = $("#cashOut");
 	//Deck variable which stores card objects
 	var deck = [];
 	//player array to store player and dealer
 	var players = [];
 	//Player variable to know which who wants to hit or stand
-	var player;
+	var playerTurn;
 	//Dealer standing checks if dealer has stand
 	var dealerStand;
 	//Result variable to see the result of the round, 0 means no result and 1 means theres result
@@ -56,7 +58,8 @@ $(function(event){
 		playerFunds();
 		//Disable some of the non needed buttons at the start
 		startButtons();
-
+		//Resets game outcome
+		resetOutcome();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Start buttons that are disabled
@@ -90,6 +93,13 @@ $(function(event){
 		$hit.on("click",hit);
 		//Implement action listener for stand
 		$stand.on("click",stand);
+		// Implement listner for cash out button
+		$cash.on("click",cashOut);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function for cashing out
+	function cashOut(){
+		gameReset();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of bet
@@ -144,7 +154,7 @@ $(function(event){
 	//Function of hit 
 	function hit(){
 		//player draws new card and then deler makes decision
-		player = players[0];
+		playerTurn = players[0];
 		hitCard();
 		dealerDecision();
 	}
@@ -166,7 +176,7 @@ $(function(event){
 		var newCard = cardDraw();
 		//Pushing the new card into the player hand depending who called push.
 		//This allow for both dealer and player to use same function
-		player.hand.push(newCard);
+		playerTurn.hand.push(newCard);
 		//Run total again to update and check for new total
 		total();
 	}
@@ -263,8 +273,10 @@ $(function(event){
 		deck = [];
 		players =[];
 		cardsPlayed = 0;
+		console.log(players,deck);
 		//sets up game again
 		setUpGame();
+		console.log(players[0],players[1]);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
@@ -298,7 +310,7 @@ $(function(event){
 		if(result == 0){
 			console.log("Dealer's turn");
 			if((players[1].total < 15)&&(players[0].total < 21)){
-				player = players[1];
+				playerTurn = players[1];
 				console.log("Dealer hits!");
 				dealerStand = false;
 				hitCard();
@@ -342,27 +354,13 @@ $(function(event){
 		startButtons();
 	}
 	//----------------------------------------------------------------------------------------------
-	//Player object blueprint
-	function player(funds,card,value){
-		this.amount = funds;
-		this.hand = card;
-		this.total = value;
-	}
-	//----------------------------------------------------------------------------------------------
-	//Card object blueprint
-	function card(num,Suit,play){
-		this.number = num;
-		this.suit = Suit;
-		this.dealt = play;
-	}
-	//----------------------------------------------------------------------------------------------
 	//Create player function
 	function createPlayers(){
 		var cards1 = [];
 		var cards2 = [];
 		//Creating 2 new player objects and pushing them into the players array for storage
-		players.push(new player(500,cards1,0,false));
-		players.push(new player(Infinity,cards2,0,false));
+		players.push(new player(500,cards1,0));
+		players.push(new player(Infinity,cards2,0));
 	}
 	//----------------------------------------------------------------------------------------------
 	//Create cards and store in deck function 
@@ -377,6 +375,20 @@ $(function(event){
 		}else 
 			deck[i] = new card(i-38,"Spades",false);
 		}
+	}
+	//----------------------------------------------------------------------------------------------
+	//Player object blueprint
+	function player(funds,card,value){
+		this.amount = funds;
+		this.hand = card;
+		this.total = value;
+	}
+	//----------------------------------------------------------------------------------------------
+	//Card object blueprint
+	function card(num,Suit,play){
+		this.number = num;
+		this.suit = Suit;
+		this.dealt = play;
 	}
 	//----------------------------------------------------------------------------------------------
 	start();
