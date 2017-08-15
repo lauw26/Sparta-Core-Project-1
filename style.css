@@ -7,18 +7,25 @@
 	background-image: url(table.jpg);
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 1200px;
+	width: 1100px;
 	height: 500px;
 	background-size: 100% 100%;
+	border-radius:10px;
 }
 #playerSide{
 	padding-top: 10px;
 	margin:auto;
 }
-
-.outline{ width: 110px; text-align: center; padding: 10px; margin: 10px; background: #FFF;box-shadow: 1px 1px 3px #000; border-radius:10px;display: inline-block; }
-
-
+.outline{ 
+	width: 110px; 
+	text-align: center; 
+	padding: 10px; 
+	margin: 10px; 
+	background: #FFF;
+	box-shadow: 1px 1px 3px #000;
+	border-radius:10px;
+	display: inline-block; 
+}
 .front {
   background: white;
 }
@@ -52,3 +59,51 @@
 	background: red;
 	color: red;
 }
+/*For introduction display with border*/
+.intro{
+	box-shadow: 1px 1px 3px #000;
+	border-radius:10px;
+	border: 2px solid #475657;
+	background-color: #CAFFD0;
+	height: 500px;
+}
+
+body{
+	background-color: #E6FAFC; 
+}
+
+.titleJumbo{
+	box-shadow: 1px 1px 3px #000;
+	border-radius:10px;
+	border: 2px solid #475657;
+	text-align: center;
+	background-color: #A0EEC0;
+}
+#playGame{
+	text-align: center;
+	padding-top: 10px;
+}
+#playButton{
+	border-radius: 50%;
+	 box-shadow: 0 9px #999;
+	 background-color: #A0EEC0;
+	 font-size: 24px;
+	 cursor: pointer;
+	 border: 2px solid #475657;
+}
+#playButton:hover{
+	background-color: #3e8e41;
+	color:white;
+}
+#playButton:active{
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+#playerStats{
+	padding-top: 20px;
+}
+#result{
+	padding-top: 20px;
+}
+

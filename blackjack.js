@@ -2,6 +2,14 @@
 $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Variables
+	//Declares the intro page
+	var $intro = $("#introduction");
+	//Declare the game page
+	var $game = $("#game");
+	
+	//Declare score board page
+	//Declare the play button in the start page
+	var $play = $("#playButton");
 	//Displays outcome of round to html
 	var $result = $("#result");
 	//Display for player information
@@ -12,6 +20,8 @@ $(function(event){
 	var $betDisplay = $("#betAmount");
 	//Declare display for player fundings
 	var $amountDisplay= $("#playerAmount");
+	//Declare display for deck size
+	var $deckSize = $("#deckSize");
 	//Deal button implemented
 	var $deal = $("#deal");
 	//Bet button declared
@@ -32,15 +42,13 @@ $(function(event){
 	//Player variable to know which who wants to hit or stand
 	var playerTurn;
 	//Dealer standing checks if dealer has stand
-	var dealerStand;
+	var dealerStand = false;
 	//Result variable to see the result of the round, 0 means no result and 1 means theres result
 	var result = 0;
 	//Pot variable to contain the amount betted
 	var pot = 0;
 	//Varible to check the amount of cards played
 	var cardsPlayed = 0;
-	//Test flip card
-	var $flip = $("#flip");
 	//Declare player side display
 	var $playerSide = $("#playerSide");
 	//Declare dealer side display
@@ -68,6 +76,8 @@ $(function(event){
 		startButtons();
 		//Resets game outcome
 		resetOutcome();
+		//Displays deck size at the start
+		displayDeck();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Start buttons that are disabled
@@ -91,6 +101,12 @@ $(function(event){
 		enableButton($stand);
 	}
 	//----------------------------------------------------------------------------------------------
+	//Buttons disable hit and stand buttons during comparison
+	function endButtons(){
+		disableButton($hit);
+		disableButton($stand);
+	}
+	//----------------------------------------------------------------------------------------------
 	//Button implementation function
 	function buttonsImplement(){
 		//Implement action listener for deal
@@ -103,8 +119,14 @@ $(function(event){
 		$stand.on("click",stand);
 		// Implement listner for cash out button
 		$cash.on("click",cashOut);
-		//Card flips
-		$flip.on("click",playerDisplayCard);
+		//Play button implementation
+		$play.on("click",gameStart);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to hide front page and bring game elements up
+	function gameStart(){
+		$intro.hide();
+		$game.show();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check card display for which player
@@ -204,7 +226,17 @@ $(function(event){
 		}
 		return numberDisplayed;
 	}
-
+	//----------------------------------------------------------------------------------------------
+	//Function hiding game nad leaderboards
+	function introPage(){
+		$game.hide();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to display deck size to user
+	function displayDeck(){
+		console.log("In display");
+		$deckSize.html("Cards in deck: " + (52-cardsPlayed));
+	}
 	//----------------------------------------------------------------------------------------------
 	//Function for cashing out
 	function cashOut(){
@@ -218,14 +250,13 @@ $(function(event){
 		//Checks if input is a number or larger than player funds
 		if((playerBet>players[0].amount)||isNaN(playerBet)){
 			//If so tell player to enter an appropirate amount
-			$potDisplay.html("Invalid input!\nPlease enter an appropirate amount");
+			$potDisplay.html("Invalid input!");
 		}else{
 			players[0].amount -= playerBet;
 			inputPot(playerBet);	
 			betButtons();
 		}
 		playerTurn = players[0];
-
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of pot
@@ -277,7 +308,6 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function for stand
 	function stand(){
-		console.log("Player stands");
 		//Check if dealer still wants to carry on
 		do{
 			dealerDecision();
@@ -344,6 +374,7 @@ $(function(event){
 	function comparison(){
 		//Finds the win,tie and lose conditions by comparing dealer and player value.
 		//Checks if player is bust or not
+		endButtons();
 		if(players[0].total < 22){
 			//If player is not bust then do comparison for win tie or lose
 			if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
@@ -361,8 +392,6 @@ $(function(event){
 		}
 		result++;
 		playerFunds();
-		console.log("Player",players[0],players[0].total);
-		console.log("Dealer",players[1],players[1].total);
 		//Resetting player hand and total for next round, funds is not resetted to keep the same
 		console.log("Round over resetting");
 		for(var i = 0; i<players.length; i++){
@@ -371,8 +400,6 @@ $(function(event){
 		}
 		pot = 0;
 		firstCard = 0;
-		console.log("Player",players[0],players[0].total);
-		console.log("Dealer",players[1],players[1].total);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
@@ -419,6 +446,8 @@ $(function(event){
 		cardsPlayed++;
 		//Display card drawed on html
 		playerDisplayCard(deck[randomNum].suit,deck[randomNum].number);
+		//Updates and displays deck size for every draw
+		displayDeck();
 		return deck[randomNum];
 	}
 	//----------------------------------------------------------------------------------------------
@@ -436,8 +465,6 @@ $(function(event){
 				console.log("Dealer stands!");
 				dealerStand = true;
 			}
-		}else{
-
 		}
 	}
 	//----------------------------------------------------------------------------------------------
@@ -458,11 +485,12 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to display outcome of round
 	function outcome(resulting){
+
 		$result.html("Dealer hand total: " + players[1].total + resulting);
 		//Display dealers card at the end of round
 		displaydealerCards();
-		//Resets html display in 6 seconds 
-		window.setTimeout(resetOutcome, 6000);	
+		//Resets html display in 5 seconds 
+		window.setTimeout(resetOutcome, 5000);	
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to display dealer faced down cards
@@ -522,5 +550,6 @@ $(function(event){
 		this.dealt = play;
 	}
 	//----------------------------------------------------------------------------------------------
+	introPage();
 	start();
 })
