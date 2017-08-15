@@ -2,30 +2,78 @@
 <html>
 <head>
 	<script
-  	src="http://code.jquery.com/jquery-3.2.1.js"
+  	src="https://code.jquery.com/jquery-3.2.1.js"
   	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   	crossorigin="anonymous"></script>
   	<script src= "blackjack.js" async></script>
   	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>Sparta Core Project 1</title>
 </head>
 <body>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="jumbotron">
-                    <h1>Sparta Core Project 1</h1>
-                </div>
-            </div>
-            <div class="col-md-2"></div>
-        </div>
+	<!-- Display for the title -->
+	<div class="container">
+  	<div class="row">
+    	<div class="col-md-2"></div>
+      <div class="col-md-8">
+	    	<div class="jumbotron titleJumbo">
+	      </div>
+      </div>
+      <div class="col-md-2"></div>
     </div>
+ 	</div>
+ 	<!-- Display for the introduction page -->
+ 	<div id = "introduction">
+ 		<div class="container">
+  	<div class="row">
+    	<div class="col-md-2"></div>
+      <div class="col-md-8 intro">
+      	<div id = "title">
+      		<h3>Welcome to blackjack!</h3>
+      	</div>
+      	<div id = "objective">
+      		<h5> Objective </h5>
+      		<p>
+      			The objective of the game is to obtain as much money as you can 
+      			before all the cards are played from the deck. When player cash hits 0,
+      			the deck has less than 8 cards or player presses cash out, the current
+      			game match ends and the amount of cash left is the player's overall
+      			score. 
+      		</p>
+      			
+      		</p>
+      	</div>
+      	<div id = "howTo">
+      		<h5> How to play </h5>
+      		<ul>
+      			<li>Try and get card total as close to 21 without going over</li>
+      			<li>Ace is worth 1 and J,Q,K is worth 10</li>
+      			<li>Input appropriate bet amount in input box and press bet to place bet</li>
+      			<li>Press deal places 2 cards for both dealer and player</li>
+      			<li>Hit draws an addtional card</li>
+      			<li>Stand holds on to the player's current hand and compares it with dealer's</li>
+      			<li>Cash out ends the match and the current cash is used as the overall score</li>
+      			<li>If tie then player reclaims the cash betted</li>
+      			<li>If both sides are busted then dealer wins</li>
+      		</ul>
+      	</div>
+      	<div id ="playGame">
+      		<p class ="playText">Press play to start</p>
+      		<button type="button" id = "playButton">Play</button>
+      	</div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+ 		</div>
+ 	</div>
+ 	<!-- Display for the main game -->
+  <div id = "game">
+    <!-- playe options and display of game -->
     <div class = "container">
     	<div  class="row">
-    		<div class = "col-md-2"></div>
-    		<div class ="col-md-3">
-				Bet: <input type="text" name="betting" value = "" id ="amount"><br>
+    		<div class ="col-md-6">
+    		<!-- Bet button and input box to obtain player bet -->
+				Bet Amount: <input type="text" name="betting" value = "" id ="amount"><br>
 				<button type="button" id = "bet">Bet</button>
     			<!-- Deal button to draw 2 cards for both dealer and player -->
 				<button type="button" id = "deal">Deal</button>
@@ -33,16 +81,62 @@
 				<button type="button" id = "hit">Hit</button>
 				<!-- Stand button to stay with player's current hand-->
 				<button type="button" id = "stand">Stand</button>
+				<!--Cash out button to end game and store value into score board-->
+				<button type="button" id = "cashOut">Cash out</button>
     		</div>
-    		<div class = "col-md-2">
+    		<div class = "col-md-3">
     			<p id="playerAmount"></p>
     			<p id = "betAmount"></p>
+    		</div>
+    		<div class = "col-md-3">
+    			<p id="deckSize"></p>
     			<p id="pot"></p>
     		</div>
-    		<div class = "col-md-2" id = "playerStats"></div>
-    		<div class = "col-md-2" id = "result"></div>
     	</div>
     </div>
-	
+   <!--  Table contianer of them for the game -->
+    <div class = "container"">
+    	<div class="row " id = "table">
+    		<div class ="col-md-12">
+    		<!-- Player side display-->
+		    	<div class = "container">
+		    		<div class="row ">
+    					<div class ="col-md-6">
+    						<h3 class = "white">Player Side</h3>
+    					</div>
+    					<div class = "col-md-6 white">
+    						<h4 id = "playerStats"></h4>
+    					</div>
+    				</div>
+		    	</div>
+		    <!-- Player side of table -->
+		    	<div class = "container playerDisplay">
+		    		<div class="row ">
+    					<div class ="col-md-12" id = "playerSide">
+    					</div>
+    				</div>
+		    	</div>
+		    	<!-- Dealer side display-->
+		    	<div class = "container">
+		    		<div class="row ">
+    					<div class ="col-md-6">
+    						<h3 class = "white">Dealer Side</h3>
+    					</div>
+    					<div class = "col-md-6 white">
+    						<h4 id = "result"></h4>
+    					</div>
+    				</div>
+		    	</div>
+		    <!-- Dealer side of table -->
+		    	<div class = "container">
+		    		<div class="row ">
+    					<div class ="col-md-12" id = "dealerSide">
+    					</div>
+    				</div>
+		    	</div>
+	    	</div>
+    	</div>
+    </div>
+  </div>
 </body>
 </html>
