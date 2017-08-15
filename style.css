@@ -7,7 +7,7 @@
 	background-image: url(table.jpg);
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 1000px;
+	width: 1200px;
 	height: 500px;
 	background-size: 100% 100%;
 }
@@ -38,14 +38,19 @@
 	height: 60px;
 	text-align: center;
 }
+/*colors for word display*/
 .black{
 	color:black;
 }
 .red{
 	color:red;
 }
+.white{
+	color: white;
+}
 /*Covers the card by setting text and background red*/
 .back{
+	border: 2px solid white;
 	background: red;
 	color: red;
 }

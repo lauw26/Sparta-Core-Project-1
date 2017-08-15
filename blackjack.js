@@ -145,6 +145,14 @@ $(function(event){
 		}
 	}
 	//----------------------------------------------------------------------------------------------
+	//Function to remove cards off the table after each round
+	function removeCards(){
+		//Removes all cards off player side
+		$playerSide.empty();
+		//Removes all cards off dealer side
+		$dealerSide.empty();
+	}
+	//----------------------------------------------------------------------------------------------
 	//Function to determine color of card
 	function determineColor(colorSuit){
 		console.log("Color card");
@@ -217,6 +225,7 @@ $(function(event){
 			betButtons();
 		}
 		playerTurn = players[0];
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of pot
@@ -381,7 +390,6 @@ $(function(event){
 		deck = [];
 		players =[];
 		cardsPlayed = 0;
-		console.log(players,deck);
 		//sets up game again
 		setUpGame();
 		console.log(players[0],players[1]);
@@ -451,7 +459,16 @@ $(function(event){
 	//Function to display outcome of round
 	function outcome(resulting){
 		$result.html("Dealer hand total: " + players[1].total + resulting);
-		window.setTimeout(resetOutcome, 3000);	
+		//Display dealers card at the end of round
+		displaydealerCards();
+		window.setTimeout(resetOutcome, 10000);	
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to display dealer faced down cards
+	function displaydealerCards(){
+		var $dealerCards = $(".back");
+		console.log("Displaying cards",$dealerCards);
+		$dealerCards.removeClass("back");
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to reset display outcome of the round
@@ -460,6 +477,8 @@ $(function(event){
 		$result.html(" ");
 		$betDisplay.html("Player bets: 0");
 		$potDisplay.html("Pot total: 0");
+		//Resetting the table display so no cards remain
+		removeCards();
 		//Resetting buttons along with display
 		startButtons();
 	}
