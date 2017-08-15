@@ -461,7 +461,8 @@ $(function(event){
 		$result.html("Dealer hand total: " + players[1].total + resulting);
 		//Display dealers card at the end of round
 		displaydealerCards();
-		window.setTimeout(resetOutcome, 10000);	
+		//Resets html display in 6 seconds 
+		window.setTimeout(resetOutcome, 6000);	
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to display dealer faced down cards

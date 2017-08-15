@@ -22,10 +22,8 @@
 .front {
   background: white;
 }
-
-.backOfCard {
-	display: none;
-	background: red;
+.playerDisplay{
+	height:180px;
 }
 
 .top{ 
