@@ -7,10 +7,11 @@
 	background-image: url(table.jpg);
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 1100px;
+	width: 1200px;
 	height: 500px;
 	background-size: 100% 100%;
 	border-radius:10px;
+	box-shadow: 1px 1px 3px #000;
 }
 #playerSide{
 	padding-top: 10px;
@@ -73,11 +74,15 @@ body{
 }
 
 .titleJumbo{
+	background-image: url(blackjacktitle.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: black;
 	box-shadow: 1px 1px 3px #000;
 	border-radius:10px;
 	border: 2px solid #475657;
-	text-align: center;
-	background-color: #A0EEC0;
+	background-size: 100% 100%;
+	height: 200px;
 }
 #playGame{
 	text-align: center;
@@ -101,9 +106,9 @@ body{
   transform: translateY(4px);
 }
 #playerStats{
-	padding-top: 20px;
+	padding-top: 15px;
 }
 #result{
-	padding-top: 20px;
+	padding-top: 15px;
 }
 
