@@ -22,6 +22,8 @@ $(function(event){
 	var $playerName = $("#playerName");
 	//Declare display for player fundings
 	var $amountDisplay= $("#playerAmount");
+	//Display player score on score page
+	var $playerScore = $("#playerScore");
 	//Declare display for deck size
 	var $deckSize = $("#deckSize");
 	//name submit button declared
@@ -303,6 +305,8 @@ $(function(event){
 		$game.hide();
 		$end.show();
 		enableButton($submit);
+		//Display user final score on score page
+		$playerScore.html(players[0].amount);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of bet
