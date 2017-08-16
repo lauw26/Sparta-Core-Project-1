@@ -7,7 +7,7 @@ $(function(event){
 	//Declare the game page
 	var $game = $("#game");
 	//Declare score board page
-	var $end = $("#playerScoreDisplayage")
+	var $end = $("#scorepage")
 	//Declare the play button in the start page
 	var $play = $("#playButton");
 	//Displays outcome of round to html
@@ -32,6 +32,8 @@ $(function(event){
 	var $bet = $("#bet");
 	//Amount bos is decleared to obtain user bet
 	var $amount = $("#amount");
+	//Replay button to allow user to play again
+	var $replay = $("#replay");
 	//Hit button declared
 	//Its not what it looks like
 	var $hit = $("#hit");
@@ -94,14 +96,14 @@ $(function(event){
 		disableButton($deal);
 		disableButton($hit);
 		disableButton($stand);
-		enableButton($cashOut);
+		enableButton($cash);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Buttons activated and disabled after betting
 	function betButtons(){
 		disableButton($bet);
 		enableButton($deal);
-		disableButton($cashOut);
+		disableButton($cash);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Buttons activated and disabled after dealing
@@ -133,6 +135,8 @@ $(function(event){
 		$play.on("click",gameStart);
 		//Submit button to display user name and score on score list
 		$submit.on("click",playerScoreDisplay);
+		//Replay button to allow user to start game again
+		$replay.on("click",gameReset);
 
 	}
 	//----------------------------------------------------------------------------------------------
@@ -143,6 +147,13 @@ $(function(event){
 		highscore.push(new playerScore(playerInputName,players[0].amount));
 		sortScore();
 		displayScoreList();
+		clearSubmitBox();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to clear submit box and stop button from pressed again
+	function clearSubmitBox(){
+		$playerName.val("");
+		disableButton($submit);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to placed sorted array list into highscore with player name and associated score
@@ -175,7 +186,6 @@ $(function(event){
 	//Function to check card display for which player
 	function playerDisplayCard(playerSuit,playerNum){
 		//If player then display card
-		console.log(playerTurn);
 
 		if(playerTurn.id == "player"){
 			createPlayerCard(playerSuit,playerNum,$playerSide);
@@ -292,7 +302,7 @@ $(function(event){
 	function cashOut(){
 		$game.hide();
 		$end.show();
-		// gameReset();
+		enableButton($submit);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of bet
@@ -449,18 +459,27 @@ $(function(event){
 		result++;
 		playerFunds();
 		//Resetting player hand and total for next round, funds is not resetted to keep the same
-		console.log("Round over resetting");
 		for(var i = 0; i<players.length; i++){
 			players[i].total = 0;
 			players[i].hand = [];
 		}
 		pot = 0;
 		firstCard = 0;
+		gameContinue();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
 	function gameContinue(){
-		if((cardsPlayed > 43)||(players[0].amount == 0)){
+		//If round does not contain the reqirements cash ends 
+		if(!gameCheck()){
+			$result.html("Game over unable to continue");
+			window.setTimeout(cashOut,5000);
+		}
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to check the state of the deck as well as play amount
+	function gameCheck(){
+		if((cardsPlayed > 43)||((players[0].amount == 0)&&(pot == 0))){
 			return false
 		}else{
 			return true
@@ -475,7 +494,11 @@ $(function(event){
 		cardsPlayed = 0;
 		//sets up game again
 		setUpGame();
-		console.log(players[0],players[1]);
+		//resets bet amount
+		$amount.val("");
+		//Hides the score page and game is displayed
+		$end.hide();
+		$game.show();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
@@ -521,6 +544,8 @@ $(function(event){
 				console.log("Dealer stands!");
 				dealerStand = true;
 			}
+		}else{
+			dealerStand = true;
 		}
 	}
 	//----------------------------------------------------------------------------------------------
