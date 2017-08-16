@@ -16,7 +16,7 @@
   	<div class="row">
     	<div class="col-md-2"></div>
       <div class="col-md-8">
-	    	<div class="jumbotron titleJumbo">
+	    	<div class="jumbotron titleJumbo"> 
 	      </div>
       </div>
       <div class="col-md-2"></div>
@@ -25,45 +25,43 @@
  	<!-- Display for the introduction page -->
  	<div id = "introduction">
  		<div class="container">
-  	<div class="row">
-    	<div class="col-md-2"></div>
-      <div class="col-md-8 intro">
-      	<div id = "title">
-      		<h3>Welcome to blackjack!</h3>
-      	</div>
-      	<div id = "objective">
-      		<h5> Objective </h5>
-      		<p>
-      			The objective of the game is to obtain as much money as you can 
-      			before all the cards are played from the deck. When player cash hits 0,
-      			the deck has less than 8 cards or player presses cash out, the current
-      			game match ends and the amount of cash left is the player's overall
-      			score. 
-      		</p>
-      			
-      		</p>
-      	</div>
-      	<div id = "howTo">
-      		<h5> How to play </h5>
-      		<ul>
-      			<li>Try and get card total as close to 21 without going over</li>
-      			<li>Ace is worth 1 and J,Q,K is worth 10</li>
-      			<li>Input appropriate bet amount in input box and press bet to place bet</li>
-      			<li>Press deal places 2 cards for both dealer and player</li>
-      			<li>Hit draws an addtional card</li>
-      			<li>Stand holds on to the player's current hand and compares it with dealer's</li>
-      			<li>Cash out ends the match and the current cash is used as the overall score</li>
-      			<li>If tie then player reclaims the cash betted</li>
-      			<li>If both sides are busted then dealer wins</li>
-      		</ul>
-      	</div>
-      	<div id ="playGame">
-      		<p class ="playText">Press play to start</p>
-      		<button type="button" id = "playButton">Play</button>
-      	</div>
-      </div>
-      <div class="col-md-2"></div>
-    </div>
+	  	<div class="row">
+	    	<div class="col-md-2"></div>
+	      <div class="col-md-8 intro">
+	      	<div id = "title">
+	      		<h3>Welcome to blackjack!</h3>
+	      	</div>
+	      	<div id = "objective">
+	      		<h5> Objective </h5>
+	      		<p>
+	      			The objective of the game is to obtain as much money as you can 
+	      			before all the cards are played from the deck. When player cash hits 0,
+	      			the deck has less than 8 cards or player presses cash out, the current
+	      			game match ends and the amount of cash left is the player's overall
+	      			score. 
+	      		</p>
+	      	</div>
+	      	<div id = "howTo">
+	      		<h5> How to play </h5>
+	      		<ul>
+	      			<li>Try and get card total as close to 21 without going over</li>
+	      			<li>Ace is worth 1 and J,Q,K is worth 10</li>
+	      			<li>Input appropriate bet amount in input box and press bet to place bet</li>
+	      			<li>Press deal places 2 cards for both dealer and player</li>
+	      			<li>Hit draws an addtional card</li>
+	      			<li>Stand holds on to the player's current hand and compares it with dealer's</li>
+	      			<li>Cash out ends the match and the current cash is used as the overall score</li>
+	      			<li>If tie then player reclaims the cash betted</li>
+	      			<li>If both sides are busted then dealer wins</li>
+	      		</ul>
+	      	</div>
+	      	<div id ="playGame">
+	      		<p class ="playText">Press play to start</p>
+	      		<button type="button" id = "playButton">Play</button>
+	      	</div>
+	      </div>
+	      <div class="col-md-2"></div>
+	    </div>
  		</div>
  	</div>
  	<!-- Display for the main game -->
@@ -72,17 +70,17 @@
     <div class = "container">
     	<div  class="row">
     		<div class ="col-md-6">
-    		<!-- Bet button and input box to obtain player bet -->
-				Bet Amount: <input type="text" name="betting" value = "" id ="amount"><br>
-				<button type="button" id = "bet">Bet</button>
-    			<!-- Deal button to draw 2 cards for both dealer and player -->
-				<button type="button" id = "deal">Deal</button>
-				<!-- Hit button to draw 1 card for player  -->
-				<button type="button" id = "hit">Hit</button>
-				<!-- Stand button to stay with player's current hand-->
-				<button type="button" id = "stand">Stand</button>
-				<!--Cash out button to end game and store value into score board-->
-				<button type="button" id = "cashOut">Cash out</button>
+	    		<!-- Bet button and input box to obtain player bet -->
+					Bet Amount: <input type="text" name="betting" placeholder = "Place bet to start" id ="amount"><br>
+					<button type="button" id = "bet">Bet</button>
+	    			<!-- Deal button to draw 2 cards for both dealer and player -->
+					<button type="button" id = "deal">Deal</button>
+					<!-- Hit button to draw 1 card for player  -->
+					<button type="button" id = "hit">Hit</button>
+					<!-- Stand button to stay with player's current hand-->
+					<button type="button" id = "stand">Stand</button>
+					<!--Cash out button to end game and store value into score board-->
+					<button type="button" id = "cashOut">Cash out</button>
     		</div>
     		<div class = "col-md-3">
     			<p id="playerAmount"></p>
@@ -138,5 +136,53 @@
     	</div>
     </div>
   </div>
+  <!-- Scoreboard page where user can see their final score as well as previous entries -->
+  <div id = "scorepage">
+ 		<div class="container">
+	  	<div class="row">
+	    	<div class="col-md-2"></div>
+	      <div class="col-md-8 intro textCenter">
+	      	<div id = "gameover">
+	      		<h3>Game over!</h3>
+	      	</div>
+	      	<div id = "playerScoring">
+	      		<h4 id = "finalScore" class = "inLine">Your score: </h4>
+	      		<p id = "playerScore" class = "inLine"></p>
+	      	</div>
+	      	<div id ="playerNameInput">
+	      		<div class="input-group">
+   						<input type="text" class="form-control" id = "playerName" placeholder="Player name">
+   						<span class="input-group-btn">
+			        	<button class="btn btn-default" type="button" id = "nameSubmit">Submit</button>
+			   			</span>
+						</div>
+					</div>
+					<div id = "scoreboardDisplay">
+						<div>
+							<h3 id = "highscores">Highscores</h3>
+						</div>
+						<div id = "scoreboard">
+							<ol>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+							</ol>
+						</div>
+					</div>
+					<div>
+						<button type="button" id = "replay">Play again</button>
+					</div>
+	      </div>
+	      <div class="col-md-2"></div>
+	    </div>
+  	</div>
+  </div>      	
 </body>
 </html>
