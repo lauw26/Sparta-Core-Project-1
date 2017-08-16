@@ -67,6 +67,8 @@ $(function(event){
 	var $dealerSide = $("#dealerSide");
 	//Declare firstCard variable to display first dealer card 
 	var firstCard = 0;
+	//Declare flip sound audio
+	var flipSound = new Audio("flipsound.mp3");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -531,6 +533,8 @@ $(function(event){
 		playerDisplayCard(deck[randomNum].suit,deck[randomNum].number);
 		//Updates and displays deck size for every draw
 		displayDeck();
+		//Makes card flip sounds everytime a card is drawn
+		flipSound.play();
 		return deck[randomNum];
 	}
 	//----------------------------------------------------------------------------------------------
