@@ -6,7 +6,6 @@ $(function(event){
 	var $intro = $("#introduction");
 	//Declare the game page
 	var $game = $("#game");
-	
 	//Declare score board page
 	//Declare the play button in the start page
 	var $play = $("#playButton");
@@ -248,7 +247,7 @@ $(function(event){
 		//grab value user inputed into text box
 		var playerBet = parseInt($amount.val());
 		//Checks if input is a number or larger than player funds
-		if((playerBet>players[0].amount)||isNaN(playerBet)){
+		if((playerBet>players[0].amount)||isNaN(playerBet)||(playerBet <= 0)){
 			//If so tell player to enter an appropirate amount
 			$potDisplay.html("Invalid input!");
 		}else{
@@ -548,6 +547,12 @@ $(function(event){
 		this.number = num;
 		this.suit = Suit;
 		this.dealt = play;
+	}
+	//----------------------------------------------------------------------------------------------
+	//Player score object to store player name along with their final score
+	function playerScore(playerName,playerScore){
+		this.playerName = playerName;
+		this.playerScore = playerScore;
 	}
 	//----------------------------------------------------------------------------------------------
 	introPage();
