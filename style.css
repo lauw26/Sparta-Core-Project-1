@@ -33,7 +33,6 @@
 .playerDisplay{
 	height:180px;
 }
-
 .top{ 
   text-align: left; 
 }
@@ -68,11 +67,9 @@
 	background-color: #CAFFD0;
 	height: 500px;
 }
-
 body{
 	background-color: #E6FAFC; 
 }
-
 .titleJumbo{
 	background-image: url(blackjacktitle.png);
 	background-repeat: no-repeat;
@@ -84,6 +81,7 @@ body{
 	background-size: 100% 100%;
 	height: 200px;
 }
+/*Play button styling */
 #playGame{
 	text-align: center;
 	padding-top: 10px;
@@ -111,4 +109,41 @@ body{
 #result{
 	padding-top: 15px;
 }
+/*center text*/
+.textCenter{
+	text-align: center;
+}
+.inLine{
+	display: inline; 
+}
+/*score name input styling*/
+#playerName{
+	width: 10vw;
+	margin-left: 21vw;
+}
+
+#nameSubmit{
+	margin-right: 21vw;
+}
+.input-group{
+	padding-top: 1vh;
+}
+#highscores{
+	margin-top: 1vh;
+}
+/*.center { text-align: center; list-style-position:inside;}*/
+ol{
+	margin-left: 19vw;
+}
+ol li{
+	text-align: left;
+	padding-top: 1vh;
+	margin-right: 26vw; 
+	width: 300px;
+}
+
+#scoreboard{
+	padding-top: 1vh;
+}
+
 

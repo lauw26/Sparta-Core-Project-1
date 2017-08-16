@@ -6,8 +6,8 @@ $(function(event){
 	var $intro = $("#introduction");
 	//Declare the game page
 	var $game = $("#game");
-	
 	//Declare score board page
+	var $end = $("#scorepage")
 	//Declare the play button in the start page
 	var $play = $("#playButton");
 	//Displays outcome of round to html
@@ -18,16 +18,24 @@ $(function(event){
 	var $potDisplay = $("#pot");
 	//Declare display for the amount player bets
 	var $betDisplay = $("#betAmount");
+	//Decalare name input for highscore
+	var $playerName = $("#playerName");
 	//Declare display for player fundings
 	var $amountDisplay= $("#playerAmount");
+	//Display player score on score page
+	var $playerScore = $("#playerScore");
 	//Declare display for deck size
 	var $deckSize = $("#deckSize");
+	//name submit button declared
+	var $submit = $("#nameSubmit");
 	//Deal button implemented
 	var $deal = $("#deal");
 	//Bet button declared
 	var $bet = $("#bet");
 	//Amount bos is decleared to obtain user bet
 	var $amount = $("#amount");
+	//Replay button to allow user to play again
+	var $replay = $("#replay");
 	//Hit button declared
 	//Its not what it looks like
 	var $hit = $("#hit");
@@ -35,10 +43,14 @@ $(function(event){
 	var $stand = $("#stand");
 	//cashOut button declared
 	var $cash = $("#cashOut");
+	//The highscore orderlist declared
+	var $scoreList = $("ol li");
 	//Deck variable which stores card objects
 	var deck = [];
 	//player array to store player and dealer
 	var players = [];
+	//Store the players name and fincal score in array
+	var highscore =[];
 	//Player variable to know which who wants to hit or stand
 	var playerTurn;
 	//Dealer standing checks if dealer has stand
@@ -55,6 +67,8 @@ $(function(event){
 	var $dealerSide = $("#dealerSide");
 	//Declare firstCard variable to display first dealer card 
 	var firstCard = 0;
+	//Declare flip sound audio
+	var flipSound = new Audio("flipsound.mp3");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -86,12 +100,14 @@ $(function(event){
 		disableButton($deal);
 		disableButton($hit);
 		disableButton($stand);
+		enableButton($cash);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Buttons activated and disabled after betting
 	function betButtons(){
 		disableButton($bet);
 		enableButton($deal);
+		disableButton($cash);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Buttons activated and disabled after dealing
@@ -121,6 +137,48 @@ $(function(event){
 		$cash.on("click",cashOut);
 		//Play button implementation
 		$play.on("click",gameStart);
+		//Submit button to display user name and score on score list
+		$submit.on("click",playerScoreDisplay);
+		//Replay button to allow user to start game again
+		$replay.on("click",gameReset);
+
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to when submit is pressed to take user name and score
+	function playerScoreDisplay(){
+		var playerInputName = String($playerName.val());
+		//create and push new player score object containing player name and score in highscore array
+		highscore.push(new playerScore(playerInputName,players[0].amount));
+		sortScore();
+		displayScoreList();
+		clearSubmitBox();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to clear submit box and stop button from pressed again
+	function clearSubmitBox(){
+		$playerName.val("");
+		disableButton($submit);
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to placed sorted array list into highscore with player name and associated score
+	function displayScoreList(){
+		//Removes previous score before placing new
+		$scoreList.empty();
+		for(var i =0; i < $scoreList.length;i++){
+			//checks the high score array if there is a player place on scoreboard else input blank
+			if(i<highscore.length){
+				$scoreList.get(i).append(highscore[i].playerName + " " + highscore[i].playerScore);
+			}else{
+				$scoreList.get(i).append("");
+			}
+		}
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to sort score array by score in descending from highest score first to lowest last order
+	function sortScore(){
+		highscore.sort(function(a, b) {
+    	return parseFloat(b.playerScore) - parseFloat(a.playerScore);
+		});
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to hide front page and bring game elements up
@@ -132,7 +190,7 @@ $(function(event){
 	//Function to check card display for which player
 	function playerDisplayCard(playerSuit,playerNum){
 		//If player then display card
-		console.log(playerTurn);
+
 		if(playerTurn.id == "player"){
 			createPlayerCard(playerSuit,playerNum,$playerSide);
 		}else{
@@ -159,8 +217,9 @@ $(function(event){
 		//Append all card elements inside the card then appending the card to html
 		$container.append($top,$middle,$bottom);
 		$container.addClass(color);
-
+		//Side determines which table to append the cards
 		side.append($container);
+
 		//Makes the class flipped by using adding the back class
 		if((firstCard>0)&&playerTurn.id == "dealer"){
 			$container.addClass("back");
@@ -179,16 +238,19 @@ $(function(event){
 	function determineColor(colorSuit){
 		console.log("Color card");
 		var colorReturned;
+
 		if((colorSuit=="Diamonds")||(colorSuit=="Hearts")){
 			return "red"
 		}else{
 			return "black"
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to determine suit to be displayed
 	function determineSuit(suit){
 		var suitDisplayed;
+
 		switch(suit){
 			case "Diamonds":
 				suitDisplayed = "&diams;";
@@ -202,6 +264,7 @@ $(function(event){
 			default:
 				suitDisplayed = "&spades;";
 		}
+
 		return suitDisplayed
 	}
 	//----------------------------------------------------------------------------------------------
@@ -230,6 +293,7 @@ $(function(event){
 	//Function hiding game nad leaderboards
 	function introPage(){
 		$game.hide();
+		$end.hide();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to display deck size to user
@@ -240,7 +304,11 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function for cashing out
 	function cashOut(){
-		gameReset();
+		$game.hide();
+		$end.show();
+		enableButton($submit);
+		//Display user final score on score page
+		$playerScore.html(players[0].amount);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of bet
@@ -248,7 +316,7 @@ $(function(event){
 		//grab value user inputed into text box
 		var playerBet = parseInt($amount.val());
 		//Checks if input is a number or larger than player funds
-		if((playerBet>players[0].amount)||isNaN(playerBet)){
+		if((playerBet>players[0].amount)||isNaN(playerBet)||(playerBet <= 0)){
 			//If so tell player to enter an appropirate amount
 			$potDisplay.html("Invalid input!");
 		}else{
@@ -277,11 +345,13 @@ $(function(event){
 		var cards = [];
 		//Result resets result upon first dealing move
 		result = 0;
+
 		//Use for loop to draw cards and store them into dealer and user hands
 		for(var i = 0; i < 4 ; i++){
 			cards.push(cardDraw());
 			//Display dealt cards
 			//Push 2 cards to player's and dealer's hand
+
 			if(i < 2){
 				//pushing to player
 				players[0].hand.push(cards[i]);
@@ -294,7 +364,9 @@ $(function(event){
 				firstCard++;
 				players[1].hand.push(cards[i]);
 			}
+
 		}
+
 		total();
 	}
 	//----------------------------------------------------------------------------------------------
@@ -393,18 +465,27 @@ $(function(event){
 		result++;
 		playerFunds();
 		//Resetting player hand and total for next round, funds is not resetted to keep the same
-		console.log("Round over resetting");
 		for(var i = 0; i<players.length; i++){
 			players[i].total = 0;
 			players[i].hand = [];
 		}
 		pot = 0;
 		firstCard = 0;
+		gameContinue();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
 	function gameContinue(){
-		if((cardsPlayed > 43)||(players[0].amount == 0)){
+		//If round does not contain the reqirements cash ends 
+		if(!gameCheck()){
+			$result.html("Game over unable to continue");
+			window.setTimeout(cashOut,5000);
+		}
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to check the state of the deck as well as play amount
+	function gameCheck(){
+		if((cardsPlayed > 43)||((players[0].amount == 0)&&(pot == 0))){
 			return false
 		}else{
 			return true
@@ -419,7 +500,11 @@ $(function(event){
 		cardsPlayed = 0;
 		//sets up game again
 		setUpGame();
-		console.log(players[0],players[1]);
+		//resets bet amount
+		$amount.val("");
+		//Hides the score page and game is displayed
+		$end.hide();
+		$game.show();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
@@ -448,6 +533,8 @@ $(function(event){
 		playerDisplayCard(deck[randomNum].suit,deck[randomNum].number);
 		//Updates and displays deck size for every draw
 		displayDeck();
+		//Makes card flip sounds everytime a card is drawn
+		flipSound.play();
 		return deck[randomNum];
 	}
 	//----------------------------------------------------------------------------------------------
@@ -465,6 +552,8 @@ $(function(event){
 				console.log("Dealer stands!");
 				dealerStand = true;
 			}
+		}else{
+			dealerStand = true;
 		}
 	}
 	//----------------------------------------------------------------------------------------------
@@ -548,6 +637,12 @@ $(function(event){
 		this.number = num;
 		this.suit = Suit;
 		this.dealt = play;
+	}
+	//----------------------------------------------------------------------------------------------
+	//Player score object to store player name along with their final score
+	function playerScore(playerName,playerScore){
+		this.playerName = playerName;
+		this.playerScore = playerScore;
 	}
 	//----------------------------------------------------------------------------------------------
 	introPage();
