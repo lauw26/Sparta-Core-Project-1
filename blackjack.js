@@ -73,6 +73,8 @@ $(function(event){
 	var shuffleSound = new Audio("shuffle.wav");
 	//Game over sound declared
 	var overSound = new Audio("failsound.mp3");
+	//Noise for losing
+	var loseSound = new Audio("lose.wav");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -315,17 +317,19 @@ $(function(event){
 		enableButton($submit);
 		//Display user final score on score page
 		$playerScore.html(players[0].amount);
+		overSound.play();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function of bet
 	function bet(){
 		//grab value user inputed into text box
 		var playerBet = parseInt($amount.val());
-		//Checks if input is a number or larger than player funds
+		//Checks if input is a number or larger than player funds as well as any other inputs
 		if((playerBet>players[0].amount)||isNaN(playerBet)||(playerBet <= 0)){
 			//If so tell player to enter an appropirate amount
 			$potDisplay.html("Invalid input!");
 		}else{
+			//Grab bet and place input while deducting bet from player amount
 			players[0].amount -= playerBet;
 			inputPot(playerBet);	
 			betButtons();
@@ -463,10 +467,12 @@ $(function(event){
 				players[0].amount += (pot/2);
 			}else{
 				outcome(" Dealer wins!");
+				window.setTimeout(losePlay,1000);
 			}
 		}else{
 			//If player is over 21 then dealer wins by default
 			outcome(" Dealer wins!");
+			window.setTimeout(losePlay,1000);
 		}
 		result++;
 		playerFunds();
@@ -478,6 +484,11 @@ $(function(event){
 		pot = 0;
 		firstCard = 0;
 		gameContinue();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to play losing sound
+	function losePlay(){
+		loseSound.play();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
