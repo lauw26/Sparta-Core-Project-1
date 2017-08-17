@@ -463,24 +463,29 @@ $(function(event){
 	function comparison(){
 		//Finds the win,tie and lose conditions by comparing dealer and player value.
 		//Checks if player is bust or not
+		var playerResults;
 		endButtons();
 		if(players[0].total < 22){
 			//If player is not bust then do comparison for win tie or lose
 			if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
-				outcome(" Player wins!");
+				playerResults = " Player wins!";
+				outcome(playerResults);
 				window.setTimeout(winPlay,1000);
 				players[0].amount += pot;
 			}else if(players[0].total==players[1].total){
 				window.setTimeout(tiePlay,1000);
-				outcome(" Its a tie!");
+				playerResults = " Its a tie!";
+				outcome(playerResults);
 				players[0].amount += (pot/2);
 			}else{
-				outcome(" Dealer wins!");
+				playerResults = " Dealer wins!";
+				outcome(playerResults);
 				window.setTimeout(losePlay,1000);
 			}
 		}else{
 			//If player is over 21 then dealer wins by default
-			outcome(" Dealer wins!");
+			playerResults = " Dealer wins!";
+			outcome(playerResults);
 			window.setTimeout(losePlay,1000);
 		}
 		result++;
@@ -492,7 +497,7 @@ $(function(event){
 		}
 		pot = 0;
 		firstCard = 0;
-		gameContinue();
+		gameContinue(playerResults);
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to play losing sound
@@ -510,10 +515,10 @@ $(function(event){
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
-	function gameContinue(){
+	function gameContinue(resulting){
 		//If round does not contain the reqirements cash ends 
 		if(!gameCheck()){
-			$result.html("Game over unable to continue");
+			$result.html("Dealer hand total: " + players[1].total + resulting + " Game over!");
 			window.setTimeout(cashOut,5000);
 		}
 	}
