@@ -176,6 +176,7 @@ $(function(event){
 	function displayScoreList(){
 		//Removes previous score before placing new
 		$scoreList.empty();
+
 		for(var i =0; i < $scoreList.length;i++){
 			//checks the high score array if there is a player place on scoreboard else input blank
 			if(i<highscore.length){
@@ -184,6 +185,7 @@ $(function(event){
 				$scoreList.get(i).append("");
 			}
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to sort score array by score in descending from highest score first to lowest last order
@@ -237,6 +239,7 @@ $(function(event){
 		if((firstCard>0)&&playerTurn.id == "dealer"){
 			$container.addClass("back");
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to remove cards off the table after each round
@@ -283,6 +286,7 @@ $(function(event){
 	//Function to determine number to be displayed
 	function determineNum(cardNumber){
 		var numberDisplayed;
+
 		switch(cardNumber.toString()){
 			case "1":
 				numberDisplayed = "A";
@@ -299,6 +303,7 @@ $(function(event){
 			default:
 				numberDisplayed= cardNumber.toString();
 		}
+
 		return numberDisplayed;
 	}
 	//----------------------------------------------------------------------------------------------
@@ -328,6 +333,7 @@ $(function(event){
 		//grab value user inputed into text box
 		var playerBet = parseInt($amount.val());
 		//Checks if input is a number or larger than player funds as well as any other inputs
+
 		if((playerBet>players[0].amount)||isNaN(playerBet)||(playerBet <= 0)){
 			//If so tell player to enter an appropirate amount
 			$potDisplay.html("Invalid input!");
@@ -338,6 +344,7 @@ $(function(event){
 			betButtons();
 			betSound.play();
 		}
+
 		playerTurn = players[0];
 	}
 	//----------------------------------------------------------------------------------------------
@@ -377,6 +384,7 @@ $(function(event){
 				players[1].hand.push(cards[i]);
 			}
 		}
+
 		total();
 	}
 	//----------------------------------------------------------------------------------------------
@@ -392,10 +400,12 @@ $(function(event){
 	function stand(){
 		//Check if dealer still wants to carry on
 		console.log(players[0],players[1]);
+
 		do{
 			dealerDecision();
 		}while(!dealerStand);
-		//Once dealer has finished his go compare the two final scores
+
+		//Once dealer has finished his go compare the two final scores 
 		if((players[1].total < 21)&&(players[1].total != 0)){
 			comparison();
 		}
@@ -416,12 +426,15 @@ $(function(event){
 	function total(){
 		var playerTotal = 0;
 		var dealerTotal = 0;
+
 		//For loop below combines 2 for loops to total both player and dealer hand at the same time and update their total value.
 		//Adds the length of both the dealer and player hand array to find how many loops
 		for(var i = 0; i<(players[0].hand.length+players[1].hand.length); i++){
+
 			//First statment updates and stores the player total
 			if(i<players[0].hand.length){
 				var addValue1 = 0;
+
 				//Checks value of cards so K,Q,J cards are valued at 10
 				if(players[0].hand[i].number < 10){
 					addValue1 = players[0].hand[i].number;
@@ -434,17 +447,22 @@ $(function(event){
 			}else{
 			//Else update the dealer's total by subtracting the player length from i to get the index 0 start
 				var addValue2 = 0;
+
 				//Checks value of cards so K,Q,J cards are valued at 10
 				if(players[1].hand[i-players[0].hand.length].number < 10){
 					addValue2 = players[1].hand[i-players[0].hand.length].number;
 				}else{
 					addValue2 = 10;
 				}
+
 				dealerTotal += addValue2;
 				players[1].total = dealerTotal;
 			}
+
 		}
+
 		displayPlayer();
+
 		//Check if player is able to continue checking both the total of player and dealer
 		if(playerContinue()){
 			dealButtons();
@@ -452,6 +470,7 @@ $(function(event){
 			//compares total of dealer and player.
 			comparison();
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to compare and find winner
@@ -460,7 +479,9 @@ $(function(event){
 		//Checks if player is bust or not
 		var playerResults;
 		endButtons();
+
 		if(players[0].total < 22){
+
 			//If player is not bust then do comparison for win tie or lose
 			if((players[0].total!=players[1].total)&&(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total)))){
 				playerResults = " Player wins!";
@@ -477,22 +498,26 @@ $(function(event){
 				outcome(playerResults);
 				window.setTimeout(losePlay,1000);
 			}
+
 		}else{
 			//If player is over 21 then dealer wins by default
 			playerResults = " Dealer wins!";
 			outcome(playerResults);
 			window.setTimeout(losePlay,1000);
 		}
+
 		result++;
 		playerFunds();
 		//Resetting and emptying pot
 		pot = 0;
 		gameContinue(playerResults);
+
 		//Resetting player hand and total for next round, funds is not resetted to keep the same
 		for(var i = 0; i<players.length; i++){
 			players[i].total = 0;
 			players[i].hand = [];
 		}
+
 		firstCard = 0;
 	}
 	//----------------------------------------------------------------------------------------------
@@ -512,20 +537,24 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
 	function gameContinue(resulting){
+
 		//If round does not contain the reqirements cash ends 
 		if(!gameCheck()){
 			$result.html("Dealer hand total: " + players[1].total + resulting + " Game over!");
 			window.setTimeout(cashOut,4000);
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
 	function gameCheck(){
+
 		if((cardsPlayed > 43)||((players[0].amount == 0)&&(pot == 0))){
 			return false
 		}else{
 			return true
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to reset gamme
@@ -547,23 +576,27 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
 	function playerContinue(){
+
 		if((players[0].total < 21)&&(players[1].total < 21)){
 			return true
 		}else{
 			return false
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function for drawing cards
 	function cardDraw(){
 		//Random number between 0-51
 		var randomNum = Math.floor(Math.random() * 52) 
+
 		//Random number used on array to grab random card
 		//Check if card selected is current in play or already been dealt using a while loop
 		while(deck[randomNum].dealt){
 			//While the card dealt is true select another random number and try again
 			randomNum = Math.floor(Math.random() * 52);
 		}
+
 		//When a card is found that has not been dealt set the dealt to true and return card
 		deck[randomNum].dealt = true;
 		cardsPlayed++;
@@ -580,7 +613,9 @@ $(function(event){
 	function dealerDecision(){
 		//If dealer hand is smaller than 14 then draw a card else stand
 		console.log(players[0],players[1]);
+
 		if(result == 0){
+
 			if(players[1].total < 15){
 				playerTurn = players[1];
 				dealerStand = false;
@@ -588,9 +623,11 @@ $(function(event){
 			}else{
 				dealerStand = true;
 			}
+
 		}else{
 			dealerStand = true;
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to grey out and disable buttons
@@ -610,7 +647,6 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function to display outcome of round
 	function outcome(resulting){
-
 		$result.html("Dealer hand total: " + players[1].total + resulting);
 		//Display dealers card at the end of round
 		displaydealerCards();
@@ -647,16 +683,21 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Create cards and store in deck function 
 	function createDeck(){
+
 		for(var i = 0 ; i < 52; i++){
+			//Checks which suit to display
 			if (i < 13){ 
-			deck[i] = new card(i+1,"Diamonds",false);
-		}else if (i < 26 && i > 12){ 
-			deck[i] = new card(i-12,"Clubs",false);
-		}else if (i < 39 && i > 25){ 
-			deck[i] = new card(i-25,"Hearts",false);
-		}else 
-			deck[i] = new card(i-38,"Spades",false);
+				deck[i] = new card(i+1,"Diamonds",false);
+			}else if (i < 26 && i > 12){ 
+				deck[i] = new card(i-12,"Clubs",false);
+			}else if (i < 39 && i > 25){ 
+				deck[i] = new card(i-25,"Hearts",false);
+			}else{
+				deck[i] = new card(i-38,"Spades",false);
+			}
+
 		}
+
 	}
 	//----------------------------------------------------------------------------------------------
 	//Player object blueprint
