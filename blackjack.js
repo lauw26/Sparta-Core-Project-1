@@ -178,12 +178,14 @@ $(function(event){
 		$scoreList.empty();
 
 		for(var i =0; i < $scoreList.length;i++){
+
 			//checks the high score array if there is a player place on scoreboard else input blank
 			if(i<highscore.length){
 				$scoreList.get(i).append(highscore[i].playerName + " " + highscore[i].playerScore);
 			}else{
 				$scoreList.get(i).append("");
 			}
+			
 		}
 
 	}
@@ -398,9 +400,8 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function for stand
 	function stand(){
-		//Check if dealer still wants to carry on
-		console.log(players[0],players[1]);
 
+		//Check if dealer still wants to carry on
 		do{
 			dealerDecision();
 		}while(!dealerStand);
@@ -611,9 +612,8 @@ $(function(event){
 	//----------------------------------------------------------------------------------------------
 	//Function for dealer to decide if to draw card
 	function dealerDecision(){
-		//If dealer hand is smaller than 14 then draw a card else stand
-		console.log(players[0],players[1]);
 
+		//If dealer hand is smaller than 14 then draw a card else stand
 		if(result == 0){
 
 			if(players[1].total < 15){
