@@ -69,6 +69,10 @@ $(function(event){
 	var firstCard = 0;
 	//Declare flip sound audio
 	var flipSound = new Audio("flipsound.mp3");
+	//Declare shuffle sound audio
+	var shuffleSound = new Audio("shuffle.wav");
+	//Game over sound declared
+	var overSound = new Audio("failsound.mp3");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -185,6 +189,8 @@ $(function(event){
 	function gameStart(){
 		$intro.hide();
 		$game.show();
+		//Shuffle noise made when play is pressed
+		shuffleSound.play();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check card display for which player
@@ -505,6 +511,8 @@ $(function(event){
 		//Hides the score page and game is displayed
 		$end.hide();
 		$game.show();
+		//Play shuffle noise upon play again
+		shuffleSound.play();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to see if player and dealer can continue to play for that round
