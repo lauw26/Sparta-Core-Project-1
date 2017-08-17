@@ -75,6 +75,12 @@ $(function(event){
 	var overSound = new Audio("failsound.mp3");
 	//Noise for losing
 	var loseSound = new Audio("lose.wav");
+	//Noise for winning
+	var winSound = new Audio("win.wav");
+	//Noise for tie
+	var tieSound = new Audio("tie.wav");
+	//Noise for betting
+	var betSound = new Audio("bet.wav");
 	//----------------------------------------------------------------------------------------------
 	//Start function
 	function start(){
@@ -333,6 +339,7 @@ $(function(event){
 			players[0].amount -= playerBet;
 			inputPot(playerBet);	
 			betButtons();
+			betSound.play();
 		}
 		playerTurn = players[0];
 	}
@@ -461,8 +468,10 @@ $(function(event){
 			//If player is not bust then do comparison for win tie or lose
 			if(((players[0].total == 21) && (players[1].total != 21))||(players[1].total > 21)||((21 - players[0].total)<(21-players[1].total))){
 				outcome(" Player wins!");
+				window.setTimeout(winPlay,1000);
 				players[0].amount += pot;
 			}else if(players[0].total==players[1].total){
+				window.setTimeout(tiePlay,1000);
 				outcome(" Its a tie!");
 				players[0].amount += (pot/2);
 			}else{
@@ -489,6 +498,15 @@ $(function(event){
 	//Function to play losing sound
 	function losePlay(){
 		loseSound.play();
+	}
+	//----------------------------------------------------------------------------------------------
+	//Function to play winning sound
+	function winPlay(){
+		winSound.play();
+	}
+	//Function to play tie sound
+	function tiePlay(){
+		tieSound.play();
 	}
 	//----------------------------------------------------------------------------------------------
 	//Function to check the state of the deck as well as play amount
