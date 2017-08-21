@@ -185,7 +185,7 @@ $(function(event){
 			}else{
 				$scoreList.get(i).append("");
 			}
-			
+
 		}
 
 	}

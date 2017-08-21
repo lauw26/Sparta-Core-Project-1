@@ -7,8 +7,8 @@
 	background-image: url(table.jpg);
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 1200px;
-	height: 500px;
+	width: 81vw;
+	height: 63vh;
 	background-size: 100% 100%;
 	border-radius:10px;
 	box-shadow: 1px 1px 3px #000;
@@ -65,7 +65,7 @@
 	border-radius:10px;
 	border: 2px solid #475657;
 	background-color: #CAFFD0;
-	height: 500px;
+	height: 63vh;
 }
 body{
 	background-color: #E6FAFC; 
@@ -84,7 +84,7 @@ body{
 /*Play button styling */
 #playGame{
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 1vh;
 }
 #playButton{
 	border-radius: 50%;
@@ -121,7 +121,6 @@ body{
 	width: 10vw;
 	margin-left: 21vw;
 }
-
 #nameSubmit{
 	margin-right: 21vw;
 }
@@ -141,9 +140,15 @@ ol li{
 	margin-right: 26vw; 
 	width: 300px;
 }
-
 #scoreboard{
 	padding-top: 1vh;
 }
+/*Player bar containing user info and info*/
+/*.playerBar{
+	box-shadow: 1px 1px 3px #000;
+	border-radius:10px;
+	border: 2px solid #475657;
+	background-color: #CAFFD0;
+}*/
 
 
